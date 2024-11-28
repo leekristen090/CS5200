@@ -39,7 +39,8 @@ public class TourTable {
 
     } catch (SQLException e) {
       e.printStackTrace();
-      JOptionPane.showMessageDialog(null, "Error loading tour data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+      JOptionPane.showMessageDialog(null, "Error loading tour data: "
+              + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
     return table;
   }
