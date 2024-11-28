@@ -7,12 +7,12 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
 
-public class AlbumTable {
+public class TourTable {
 
-  public static JTable getAlbumTable(Connection connection) {
+  public static JTable getTourTable(Connection connection) {
     JTable table = new JTable();
     try (Statement statement = connection.createStatement()) {
-      String query = "SELECT * FROM album";
+      String query = "SELECT * FROM tour";
       ResultSet resultSet = statement.executeQuery(query);
 
       // Get column count
@@ -39,7 +39,7 @@ public class AlbumTable {
 
     } catch (SQLException e) {
       e.printStackTrace();
-      JOptionPane.showMessageDialog(null, "Error loading album data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+      JOptionPane.showMessageDialog(null, "Error loading tour data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
     return table;
   }
