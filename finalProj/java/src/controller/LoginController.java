@@ -9,10 +9,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
+/**
+ * This is the login controller class which helps us to login into the database from the gui.
+ */
 public class LoginController {
 
   private final LoginView view;
 
+  /**
+   * Constructor for the login.
+   * @param view the view
+   */
   public LoginController(LoginView view) {
     this.view = view;
 
@@ -32,7 +39,8 @@ public class LoginController {
     try {
       // Attempt to connect using the provided username and password
       Connection connection = DBConnect.connect(username, password);
-      JOptionPane.showMessageDialog(view, "Connection Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+      JOptionPane.showMessageDialog(view, "Connection Successful!", "Success",
+              JOptionPane.INFORMATION_MESSAGE);
 
       // Open the Main Window
       MainWindow mainWindow = new MainWindow(connection);
@@ -42,7 +50,8 @@ public class LoginController {
       view.dispose();
 
     } catch (SQLException e) {
-      JOptionPane.showMessageDialog(view, "Connection Failed: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+      JOptionPane.showMessageDialog(view, "Connection Failed: " + e.getMessage(),
+              "Error", JOptionPane.ERROR_MESSAGE);
     }
   }
 }
