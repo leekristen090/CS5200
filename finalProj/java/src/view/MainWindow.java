@@ -8,12 +8,20 @@ import java.sql.Connection;
 import model.AlbumTable;
 import model.TourTable;
 
+/**
+ * This is the main window class which creates the window seen after a successful connection the
+ * MySQL database.
+ */
 public class MainWindow extends JFrame {
 
   private JButton showTableButton;
   private JPanel tablePanel;
   private Connection connection;
 
+  /**
+   * Constructing the main window.
+   * @param connection our connection to the db
+   */
   public MainWindow(Connection connection) {
     this.connection = connection;
 
@@ -76,7 +84,6 @@ public class MainWindow extends JFrame {
       case "tour":
         table = TourTable.getTourTable(connection);
         break;
-      // Add cases for other tables as needed
     }
 
     if (table != null) {

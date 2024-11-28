@@ -4,12 +4,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * This is the login view class which creates the window to connect to the database using
+ * a username and password.
+ */
 public class LoginView extends JFrame {
 
   private final JTextField usernameField = new JTextField(20);
   private final JPasswordField passwordField = new JPasswordField(20);
   private final JButton loginButton = new JButton("Login");
 
+  /**
+   * Constructing the login view.
+   */
   public LoginView() {
     setTitle("Database Login");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,16 +33,26 @@ public class LoginView extends JFrame {
     setLocationRelativeTo(null);
   }
 
-  // Getter methods for username and password
+  /**
+   * Get the given user's username.
+   * @return the username
+   */
   public String getUsername() {
     return usernameField.getText();
   }
 
+  /**
+   * Get the given user's password.
+   * @return the password
+   */
   public String getPassword() {
     return new String(passwordField.getPassword());
   }
-
-  // Method to add ActionListener to the login button
+  
+  /**
+   * add an action listener to the login button.
+   * @param listener the action listener
+   */
   public void addLoginListener(ActionListener listener) {
     loginButton.addActionListener(listener);
   }
