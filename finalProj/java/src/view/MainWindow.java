@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import model.AlbumTable;
+import model.CustomerTable;
 import model.SongTable;
 import model.TourTable;
 
@@ -82,6 +83,9 @@ public class MainWindow extends JFrame {
     switch (tableName) {
       case "album":
         table = AlbumTable.getAlbumTable(connection);
+        break;
+      case "customer":
+        table = CustomerTable.getCustomerTable(connection);
         break;
       case "tour":
         table = TourTable.getTourTable(connection);
