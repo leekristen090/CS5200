@@ -7,8 +7,14 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import model.AlbumTable;
 import model.CustomerTable;
+import model.LocationTable;
+import model.OpenToShowTable;
+import model.OpeningActTable;
+import model.SabrinaShowTable;
 import model.SongTable;
+import model.TicketTable;
 import model.TourTable;
+import model.VenueTable;
 
 /**
  * This is the main window class which creates the window seen after a successful connection the
@@ -87,11 +93,30 @@ public class MainWindow extends JFrame {
       case "customer":
         table = CustomerTable.getCustomerTable(connection);
         break;
-      case "tour":
-        table = TourTable.getTourTable(connection);
+      case "location":
+        table = LocationTable.getLocationTable(connection);
+        break;
+      case "opening_act":
+        table = OpeningActTable.getOpeningActTable(connection);
+        break;
+      case "opening_to_show":
+        table = OpenToShowTable.getOpeningToShowTable(connection);
+        break;
+      case "sabrina_show":
+        table = SabrinaShowTable.getSabrinaShowTable(connection);
         break;
       case "song":
         table = SongTable.getSongTable(connection);
+        break;
+      case "ticket_sales":
+        table = TicketTable.getTicketTable(connection);
+        break;
+      case "tour":
+        table = TourTable.getTourTable(connection);
+        break;
+      case "venue":
+        table = VenueTable.getVenueTable(connection);
+        break;
     }
 
     if (table != null) {
