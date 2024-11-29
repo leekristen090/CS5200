@@ -48,7 +48,7 @@ public class LoginView extends JFrame {
   public String getPassword() {
     return new String(passwordField.getPassword());
   }
-  
+
   /**
    * add an action listener to the login button.
    * @param listener the action listener

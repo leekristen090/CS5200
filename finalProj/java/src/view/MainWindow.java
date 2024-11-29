@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import model.AlbumTable;
+import model.SongTable;
 import model.TourTable;
 
 /**
@@ -14,9 +15,9 @@ import model.TourTable;
  */
 public class MainWindow extends JFrame {
 
-  private JButton showTableButton;
-  private JPanel tablePanel;
-  private Connection connection;
+  private final JButton showTableButton;
+  private final JPanel tablePanel;
+  private final Connection connection;
 
   /**
    * Constructing the main window.
@@ -56,7 +57,8 @@ public class MainWindow extends JFrame {
 
   // Open a dialog to select the table to display
   private void openTableSelectionDialog() {
-    String[] options = {"album", "tour", "song"}; // Add all your table names here
+    String[] options = {"album", "customer","location","opening_act","opening_to_show",
+            "sabrina_show", "song", "ticket_sales","tour","venue"};
     String selectedTable = (String) JOptionPane.showInputDialog(
             this,
             "Select a table to view:",
@@ -84,6 +86,8 @@ public class MainWindow extends JFrame {
       case "tour":
         table = TourTable.getTourTable(connection);
         break;
+      case "song":
+        table = SongTable.getSongTable(connection);
     }
 
     if (table != null) {
