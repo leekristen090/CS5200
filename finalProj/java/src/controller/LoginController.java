@@ -5,8 +5,6 @@ import view.LoginView;
 import view.MainWindow;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,12 +22,7 @@ public class LoginController {
     this.view = view;
 
     // Set up the listener for the login button
-    this.view.addLoginListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        login();
-      }
-    });
+    this.view.addLoginListener(e -> login());
   }
 
   private void login() {
