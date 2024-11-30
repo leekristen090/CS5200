@@ -1,9 +1,17 @@
 package view;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JButton;
+import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import model.AlbumTable;
 import model.CustomerTable;
@@ -23,6 +31,8 @@ import model.VenueTable;
 public class MainWindow extends JFrame {
 
   private final JButton showTableButton;
+  private final JButton updateTableButton;
+  private final JButton addTupleButton;
   private final JPanel tablePanel;
   private final Connection connection;
 
@@ -41,6 +51,10 @@ public class MainWindow extends JFrame {
     sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.Y_AXIS));  // Vertical layout
     showTableButton = new JButton("Show Table");
     sidePanel.add(showTableButton);
+    updateTableButton = new JButton("Update Table");
+    sidePanel.add(updateTableButton);
+    addTupleButton = new JButton("Add Tuple");
+    sidePanel.add(addTupleButton);
     add(sidePanel, BorderLayout.WEST);
 
     // Create the table display panel (center)
@@ -49,12 +63,8 @@ public class MainWindow extends JFrame {
     add(tablePanel, BorderLayout.CENTER);
 
     // Set action listener for Show Table button
-    showTableButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        openTableSelectionDialog();
-      }
-    });
+    showTableButton.addActionListener(e -> openTableSelectionDialog());
+    addTupleButton.addActionListener(e -> openAddTupleDialog());
 
     // Set window properties
     setSize(800, 600);
@@ -126,4 +136,125 @@ public class MainWindow extends JFrame {
       tablePanel.repaint();
     }
   }
+
+  private void openAddTupleDialog() {
+    JDialog addDialog = new JDialog(this, "Add Tuple", true);
+    addDialog.setLayout(new BorderLayout());
+
+    // Dropdown for table selection
+    String[] tables = {"album", "customer", "song", "tour"}; // Add all table names here
+    JComboBox<String> tableSelector = new JComboBox<>(tables);
+
+    // Panel for dynamic input fields
+    JPanel inputPanel = new JPanel();
+    inputPanel.setLayout(new GridLayout(0, 2, 10, 10)); // Dynamic rows
+
+    // Update input fields when table selection changes
+    tableSelector.addActionListener(
+            e -> updateInputFields((String) tableSelector.getSelectedItem(), inputPanel));
+
+    // Buttons
+    JPanel buttonPanel = new JPanel();
+    JButton submitButton = new JButton("Submit");
+    JButton cancelButton = new JButton("Cancel");
+
+    buttonPanel.add(submitButton);
+    buttonPanel.add(cancelButton);
+
+    // Submit button action
+    submitButton.addActionListener(e -> {
+      String selectedTable = (String) tableSelector.getSelectedItem();
+      if (selectedTable != null) {
+        boolean success = handleAddTuple(selectedTable, inputPanel);
+        if (success) {
+          JOptionPane.showMessageDialog(this, "Tuple added successfully!");
+          addDialog.dispose();
+        } else {
+          JOptionPane.showMessageDialog(this, "Failed to add tuple.",
+                  "Error", JOptionPane.ERROR_MESSAGE);
+        }
+      }
+    });
+
+    cancelButton.addActionListener(e -> addDialog.dispose());
+
+    // Dialog layout
+    addDialog.add(tableSelector, BorderLayout.NORTH);
+    addDialog.add(new JScrollPane(inputPanel), BorderLayout.CENTER);
+    addDialog.add(buttonPanel, BorderLayout.SOUTH);
+
+    // Initialize with first table's fields
+    updateInputFields((String) tableSelector.getSelectedItem(), inputPanel);
+
+    addDialog.setSize(500, 400);
+    addDialog.setLocationRelativeTo(this);
+    addDialog.setVisible(true);
+  }
+
+  private void updateInputFields(String tableName, JPanel inputPanel) {
+    inputPanel.removeAll();
+
+    // Define fields for each table
+    switch (tableName) {
+      case "album":
+        inputPanel.add(new JLabel("Album Name:"));
+        inputPanel.add(new JTextField());
+        inputPanel.add(new JLabel("Release Date (YYYY-MM-DD):"));
+        inputPanel.add(new JTextField());
+        break;
+      case "customer":
+        inputPanel.add(new JLabel("First Name:"));
+        inputPanel.add(new JTextField());
+        inputPanel.add(new JLabel("Last Name:"));
+        inputPanel.add(new JTextField());
+        inputPanel.add(new JLabel("Phone:"));
+        inputPanel.add(new JTextField());
+        inputPanel.add(new JLabel("Email:"));
+        inputPanel.add(new JTextField());
+        break;
+      case "song":
+        inputPanel.add(new JLabel("Song Name:"));
+        inputPanel.add(new JTextField());
+        inputPanel.add(new JLabel("Album ID:"));
+        inputPanel.add(new JTextField());
+        inputPanel.add(new JLabel("Tour Name:"));
+        inputPanel.add(new JTextField());
+        inputPanel.add(new JLabel("Order Played:"));
+        inputPanel.add(new JTextField());
+        break;
+      // Add more cases for other tables
+    }
+
+    inputPanel.revalidate();
+    inputPanel.repaint();
+  }
+
+  private boolean handleAddTuple(String tableName, JPanel inputPanel) {
+    Component[] components = inputPanel.getComponents();
+    String[] inputs = new String[components.length / 2];
+
+    // Collect user inputs
+    for (int i = 1; i < components.length; i += 2) {
+      if (components[i] instanceof JTextField) {
+        inputs[i / 2] = ((JTextField) components[i]).getText();
+      }
+    }
+
+    // Call the stored procedure for the selected table
+    try {
+      switch (tableName) {
+        case "album":
+          return AlbumTable.addTupleWithProcedure(connection, inputs[0], inputs[1]);
+//        case "customer":
+//          return CustomerTable.addTupleWithProcedure(connection, inputs[0], inputs[1], inputs[2], inputs[3]);
+        // Add cases for other tables
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
+
+
 }
