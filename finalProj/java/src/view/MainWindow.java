@@ -142,7 +142,8 @@ public class MainWindow extends JFrame {
     addDialog.setLayout(new BorderLayout());
 
     // Dropdown for table selection
-    String[] tables = {"album", "customer", "song", "tour"}; // Add all table names here
+    String[] tables = {"album", "customer","location","opening_act","opening_to_show",
+            "sabrina_show", "song", "ticket_sales","tour","venue"};
     JComboBox<String> tableSelector = new JComboBox<>(tables);
 
     // Panel for dynamic input fields
@@ -169,6 +170,7 @@ public class MainWindow extends JFrame {
         if (success) {
           JOptionPane.showMessageDialog(this, "Tuple added successfully!");
           addDialog.dispose();
+          displayTable(selectedTable); // show updated table
         } else {
           JOptionPane.showMessageDialog(this, "Failed to add tuple.",
                   "Error", JOptionPane.ERROR_MESSAGE);
@@ -212,6 +214,41 @@ public class MainWindow extends JFrame {
         inputPanel.add(new JLabel("Email:"));
         inputPanel.add(new JTextField());
         break;
+      case "location":
+        inputPanel.add(new JLabel("City:"));
+        inputPanel.add(new JTextField());
+        inputPanel.add(new JLabel("State/Region:"));
+        inputPanel.add(new JTextField());
+        inputPanel.add(new JLabel("Country:"));
+        inputPanel.add(new JTextField());
+        break;
+      case "opening_act":
+        inputPanel.add(new JLabel("Act Name:"));
+        inputPanel.add(new JTextField());
+        break;
+      case "opening_to_show":
+        inputPanel.add(new JLabel("Tour Name:"));
+        inputPanel.add(new JTextField());
+        inputPanel.add(new JLabel("Show Id:"));
+        inputPanel.add(new JTextField());
+        inputPanel.add(new JLabel("Act Id:"));
+        inputPanel.add(new JTextField());
+        inputPanel.add(new JLabel("Performance Order:"));
+        inputPanel.add(new JTextField());
+        break;
+      case "sabrina_show":
+        inputPanel.add(new JLabel("Tour Name:"));
+        inputPanel.add(new JTextField());
+        inputPanel.add(new JLabel("Show Id:"));
+        inputPanel.add(new JTextField());
+        inputPanel.add(new JLabel("Venue Name:"));
+        inputPanel.add(new JTextField());
+        inputPanel.add(new JLabel("Location Id:"));
+        inputPanel.add(new JTextField());
+        inputPanel.add(new JLabel("Scheduled Date (YYYY-MM-DD):"));
+        inputPanel.add(new JTextField());
+        inputPanel.add(new JLabel("Show Status (Upcoming/Cancelled/Completed):"));
+        break;
       case "song":
         inputPanel.add(new JLabel("Song Name:"));
         inputPanel.add(new JTextField());
@@ -222,7 +259,8 @@ public class MainWindow extends JFrame {
         inputPanel.add(new JLabel("Order Played:"));
         inputPanel.add(new JTextField());
         break;
-      // Add more cases for other tables
+      default:
+
     }
 
     inputPanel.revalidate();
@@ -232,6 +270,7 @@ public class MainWindow extends JFrame {
   private boolean handleAddTuple(String tableName, JPanel inputPanel) {
     Component[] components = inputPanel.getComponents();
     String[] inputs = new String[components.length / 2];
+    JTable table = null;
 
     // Collect user inputs
     for (int i = 1; i < components.length; i += 2) {
@@ -245,8 +284,9 @@ public class MainWindow extends JFrame {
       switch (tableName) {
         case "album":
           return AlbumTable.addTupleWithProcedure(connection, inputs[0], inputs[1]);
-//        case "customer":
-//          return CustomerTable.addTupleWithProcedure(connection, inputs[0], inputs[1], inputs[2], inputs[3]);
+        case "customer":
+          return CustomerTable.addCustomerTuple(connection, inputs[0], inputs[1], inputs[2],
+                  inputs[3]);
         // Add cases for other tables
       }
     } catch (Exception e) {
