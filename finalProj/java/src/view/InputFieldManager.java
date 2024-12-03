@@ -92,4 +92,20 @@ public class InputFieldManager {
     panel.add(new JLabel(labelText));
     panel.add(new JTextField());
   }
+
+  public static void updateDeleteFields(String tableName, JPanel inputPanel) {
+    inputPanel.removeAll();
+    switch (tableName) {
+      case "album":
+        addField(inputPanel, "Album ID to delete:");
+        break;
+      case "customer":
+        addField(inputPanel, "Customer ID to delete:");
+        break;
+      default:
+        throw new IllegalArgumentException("Invalid table name: " + tableName);
+    }
+    inputPanel.revalidate();
+    inputPanel.repaint();
+  }
 }

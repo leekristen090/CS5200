@@ -48,6 +48,7 @@ public class MainWindow extends JFrame {
     // Set action listener for Show Table button
     showTableButton.addActionListener(e -> openTableSelectionDialog());
     addTupleButton.addActionListener(e -> openAddTupleDialog());
+    deleteTupleButton.addActionListener(e -> openDeleteTupleDialog());
 
     // Set window properties
     setSize(800, 600);
@@ -151,6 +152,41 @@ public class MainWindow extends JFrame {
     addDialog.setSize(500, 400);
     addDialog.setLocationRelativeTo(this);
     addDialog.setVisible(true);
+  }
+
+  /**
+   * Helper method to open popup window for ability to delete tuple from specified table.
+   */
+  private void openDeleteTupleDialog() {
+    JDialog deleteDialog = new JDialog(this, "Delete Tuple", true);
+    deleteDialog.setLayout(new BorderLayout());
+    String[] tables = {"album","customer"};
+    JComboBox<String> tableSelector = new JComboBox<>(tables);
+    JPanel inputPanel = new JPanel();
+    inputPanel.setLayout(new GridLayout(0, 2, 10, 10));
+
+    tableSelector.addActionListener(e ->
+            InputFieldManager.updateDeleteFields((String) tableSelector.getSelectedItem(),
+                    inputPanel));
+
+    JPanel buttonPanel = new JPanel();
+    JButton submitButton = new JButton("Submit");
+    JButton cancelButton = new JButton("Cancel");
+    buttonPanel.add(submitButton);
+    buttonPanel.add(cancelButton);
+
+    // add submit button action listener
+    cancelButton.addActionListener(e -> deleteDialog.dispose());
+
+    deleteDialog.add(tableSelector, BorderLayout.NORTH);
+    deleteDialog.add(new JScrollPane(inputPanel), BorderLayout.CENTER);
+    deleteDialog.add(buttonPanel, BorderLayout.SOUTH);
+
+    // Initialize with first table's fields
+    InputFieldManager.updateDeleteFields((String) tableSelector.getSelectedItem(), inputPanel);
+    deleteDialog.setSize(500, 400);
+    deleteDialog.setLocationRelativeTo(this);
+    deleteDialog.setVisible(true);
   }
 
 
