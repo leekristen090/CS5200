@@ -68,6 +68,7 @@ public class TableUtil {
    */
   public static boolean executeProcedure(Connection connection, String procedureCall,
                                          Object... parameters) {
+    //throws java.sql.SQLException
     try (CallableStatement callableStatement = connection.prepareCall(procedureCall)) {
       // Set parameters
       for (int i = 0; i < parameters.length; i++) {

@@ -1,21 +1,21 @@
 package model;
 
 import javax.swing.*;
-
 import java.sql.Connection;
 
 /**
  * This is the song table class which helps us to apply CRUD operations to the song table in
  * the team_sabrina database.
  */
-public class SongTable {
+public class SongTable implements TableOps {
 
   /**
    * Method to retrieve data from the song table in the team_sabrina db.
    * @param connection db connection
    * @return a table with the corresponding data
    */
-  public static JTable getSongTable(Connection connection) {
+  @Override
+  public JTable getDBTableData(Connection connection) {
     String query = "SELECT * FROM song";
     return TableUtil.fetchTableData(connection, query);
   }
@@ -23,14 +23,15 @@ public class SongTable {
   /**
    * Method to add a tuple to the song table in the team_sabrina db.
    * @param connection db connection
-   * @param songName name of song to be added
-   * @param albumId corresponding album id
-   * @param tourName corresponding tour name
-   * @param orderPlayed the order played
+   * @param parameters given parameters to add tuple to table
    * @return true if tuple added successfully, false otherwise
    */
-  public static boolean addSongTuple(Connection connection, String songName, String albumId,
-                                     String tourName, String orderPlayed) {
+  @Override
+  public boolean addDBTuple(Connection connection, Object[] parameters) {
+    String songName = (String) parameters[0];
+    String albumId = (String) parameters[1];
+    String tourName = (String) parameters[2];
+    String orderPlayed = (String) parameters[3];
     if (songName == null || songName.trim().isEmpty() ||
             albumId == null || albumId.trim().isEmpty() ||
             tourName == null || tourName.trim().isEmpty() ||
@@ -47,7 +48,7 @@ public class SongTable {
       int aId = Integer.parseInt(albumId);
       int oP = Integer.parseInt(orderPlayed);
       return TableUtil.executeProcedure(connection, call, songName, aId, tourName, oP);
-    } catch (Exception e) {
+    }  catch (Exception e) {
       JOptionPane.showMessageDialog(null,
               "Error adding tuple: " + e.getMessage(),
               "Database Error", JOptionPane.ERROR_MESSAGE);

@@ -4,14 +4,15 @@ import java.sql.Connection;
 
 import javax.swing.*;
 
-public class LocationTable {
+public class LocationTable implements TableOps {
 
   /**
    * Method to get the data from location table.
    * @param connection the db connection
    * @return table with corresponding data
    */
-  public static JTable getLocationTable(Connection connection) {
+  @Override
+  public JTable getDBTableData(Connection connection) {
     String query = "SELECT * FROM location";
     return TableUtil.fetchTableData(connection, query);
   }
@@ -19,13 +20,14 @@ public class LocationTable {
   /**
    * Method to add a tuple to the location table
    * @param connection db connection
-   * @param city city to add
-   * @param stateRegion state/region to add
-   * @param country country to add
+   * @param parameters the given parameters for location table
    * @return true if tuple is successfully added, false otherwise
    */
-  public static boolean addLocationTuple(Connection connection, String city, String stateRegion,
-                                         String country) {
+  @Override
+  public boolean addDBTuple(Connection connection, Object[] parameters) {
+    String city = (String) parameters[0];
+    String stateRegion = (String) parameters[1];
+    String country = (String) parameters[2];
     if (city == null || city.trim().isEmpty()) {
       JOptionPane.showMessageDialog(null, "City cannot be empty.",
               "Input Error", JOptionPane.ERROR_MESSAGE);

@@ -8,14 +8,15 @@ import java.sql.Connection;
  * This is the open to show table class which helps us apply CRUD operations to the
  * opening_to_show table in the team_sabrina database.
  */
-public class OpenToShowTable {
+public class OpenToShowTable implements TableOps {
 
   /**
    * Method to retrieve the data in the opening_to_show table in the team_sabrina db.
    * @param connection db connection
    * @return a table with the corresponding data
    */
-  public static JTable getOpeningToShowTable(Connection connection) {
+  @Override
+  public JTable getDBTableData(Connection connection) {
     String query = "SELECT * FROM opening_to_show";
     return TableUtil.fetchTableData(connection, query);
   }
@@ -23,14 +24,15 @@ public class OpenToShowTable {
   /**
    * Method to add a tuple to the opening_to_show table in the team_sabrina db.
    * @param connection db connection
-   * @param tourName corresponding tour name
-   * @param showId corresponding show id
-   * @param actId corresponding act id
-   * @param performanceOrder in which order the opening act played
+   * @param parameters parameters for adding tuple to table
    * @return true if tuple added successfully, false otherwise
    */
-  public static boolean addOpenToShowTuple(Connection connection, String tourName, String showId,
-                                           String actId, String performanceOrder) {
+  @Override
+  public boolean addDBTuple(Connection connection, Object[] parameters) {
+    String tourName = (String) parameters[0];
+    String showId = (String) parameters[1];
+    String actId = (String) parameters[2];
+    String performanceOrder = (String) parameters[3];
     if (tourName == null || tourName.trim().isEmpty() ||
             showId == null || showId.trim().isEmpty() ||
             actId == null || actId.trim().isEmpty() ||

@@ -2,7 +2,6 @@
 package model;
 
 import javax.swing.*;
-
 import java.sql.Connection;
 
 import static model.TableUtil.isValidEmail;
@@ -11,14 +10,15 @@ import static model.TableUtil.isValidPhone;
 /**
  * This is the customer table class which helps us apply CRUD operations to the customer table.
  */
-public class CustomerTable {
+public class CustomerTable implements TableOps {
 
   /**
    * Method to get data from the customer database table.
    * @param connection db connection
    * @return table with corresponding data
    */
-  public static JTable getCustomerTable(Connection connection) {
+  @Override
+  public JTable getDBTableData(Connection connection) {
     String query = "SELECT * FROM customer";
     return TableUtil.fetchTableData(connection, query);
   }
@@ -26,14 +26,15 @@ public class CustomerTable {
   /**
    * Method to add a customer tuple.
    * @param connection db connection
-   * @param fName customer first name
-   * @param lName customer last name
-   * @param phone customer phone number
-   * @param email customer email
+   * @param parameters given for customer table
    * @return true if tuple added successfully, false otherwise
    */
-  public static boolean addCustomerTuple(Connection connection, String fName, String lName,
-                                         String phone, String email) {
+  @Override
+  public boolean addDBTuple(Connection connection, Object[] parameters) {
+    String fName = (String) parameters[0];
+    String lName = (String) parameters[1];
+    String phone  = (String) parameters[2];
+    String email = (String) parameters[3];
     if (fName == null || fName.trim().isEmpty()) {
       JOptionPane.showMessageDialog(null, "First name cannot be empty.",
               "Input Error", JOptionPane.ERROR_MESSAGE);

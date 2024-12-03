@@ -1,7 +1,6 @@
 package model;
 
 import javax.swing.*;
-
 import java.sql.Connection;
 
 import static model.TableUtil.isValidDate;
@@ -9,14 +8,15 @@ import static model.TableUtil.isValidDate;
 /**
  * This is the album table class which handles all CRUD operations on the album table.
  */
-public class AlbumTable {
+public class AlbumTable implements TableOps {
 
   /**
    * retrieve and show the album table.
-   * @param connection our connection
+   * @param connection db connection
    * @return the album table
    */
-  public static JTable getAlbumTable(Connection connection) {
+  @Override
+  public JTable getDBTableData(Connection connection) {
     String query = "SELECT * FROM album";
     return TableUtil.fetchTableData(connection, query);
   }
@@ -24,12 +24,19 @@ public class AlbumTable {
   /**
    * Add tuple to album table.
    * @param connection the connection
-   * @param albumName the album name to add
-   * @param releaseDate the release date
-   * @return the tuple
+   * @param parameters given parameters for the album table
+   * @return true if tuple added successfully, false otherwise
    */
-  public static boolean addTupleWithProcedure(Connection connection, String albumName,
-                                              String releaseDate) {
+  @Override
+  public boolean addDBTuple(Connection connection, Object[] parameters) {
+    if (parameters.length != 2) {
+      JOptionPane.showMessageDialog(null, "Invalid number of parameters.",
+              "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+
+    String albumName = (String) parameters[0];
+    String releaseDate = (String) parameters[1];
     if (albumName == null || albumName.trim().isEmpty()) {
       JOptionPane.showMessageDialog(null, "Album name cannot be empty.",
               "Input Error", JOptionPane.ERROR_MESSAGE);

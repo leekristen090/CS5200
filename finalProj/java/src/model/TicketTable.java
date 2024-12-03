@@ -7,14 +7,15 @@ import java.sql.Connection;
  * This is the ticket table class which helps to apply CRUD operations to the ticket_sales table
  * in the team_sabrina database.
  */
-public class TicketTable {
+public class TicketTable implements TableOps {
 
   /**
    * Method to retrieve data from the ticket_sales table in the team_sabrina db.
    * @param connection db connection
    * @return a table with the corresponding data
    */
-  public static JTable getTicketTable(Connection connection) {
+  @Override
+  public JTable getDBTableData(Connection connection) {
     String query = "SELECT * FROM ticket_sales";
     return TableUtil.fetchTableData(connection, query);
   }
@@ -24,17 +25,17 @@ public class TicketTable {
   /**
    * Method to add a tuple to the ticket_sales table in the team_sabrina db.
    * @param connection db connection
-   * @param purchaseDate date of ticket sale
-   * @param cost cost of ticket(s)
-   * @param quantity number of tickets purchases
-   * @param custId customer
-   * @param tourName corresponding tour name
-   * @param showId corresponding show id
+   * @param parameters given parameters to add tuple to table
    * @return true if tuple added successfully, false otherwise
    */
-  public static boolean addTicketSaleTuple(Connection connection, String purchaseDate, String cost,
-                                           String quantity, String custId,
-                                           String tourName, String showId) {
+  @Override
+  public boolean addDBTuple(Connection connection, Object[] parameters) {
+    String purchaseDate = (String) parameters[0];
+    String cost = (String) parameters[1];
+    String quantity = (String) parameters[2];
+    String custId = (String) parameters[3];
+    String tourName = (String) parameters[4];
+    String showId = (String) parameters[5];
     if (purchaseDate == null || purchaseDate.isEmpty() ||
             cost == null || cost.isEmpty() ||
             quantity == null || quantity.isEmpty() ||

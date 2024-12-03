@@ -9,14 +9,15 @@ import static model.TableUtil.isValidDate;
  * This is the sabrina show table class which helps us to apply CRUD operations to the
  * sabrina_show table in the team_sabrina database.
  */
-public class SabrinaShowTable {
+public class SabrinaShowTable implements TableOps {
 
   /**
    * Method to retrieve the data from the sabrina_show table in the team_sabrina db.
    * @param connection db connection
    * @return a table with the corresponding data
    */
-  public static JTable getSabrinaShowTable(Connection connection) {
+  @Override
+  public JTable getDBTableData(Connection connection) {
     String query = "SELECT * FROM sabrina_show";
     return TableUtil.fetchTableData(connection, query);
   }
@@ -24,17 +25,17 @@ public class SabrinaShowTable {
   /**
    * Method to add a tuple to the sabrina_show table in the team_sabrina db.
    * @param connection db connection
-   * @param tour_name corresponding tour_name
-   * @param show_id corresponding show_id
-   * @param venue_name corresponding venue_name
-   * @param location_id corresponding location_id
-   * @param scheduled_date the scheduled date
-   * @param show_status the show status
+   * @param parameters given parameters to add tuple to table
    * @return true if tuple added successfully, false otherwise
    */
-  public static boolean addShowTuple(Connection connection,String tour_name, String show_id,
-                                     String venue_name, String location_id,
-                                     String scheduled_date, String show_status) {
+  @Override
+  public boolean addDBTuple(Connection connection, Object[] parameters) {
+    String tour_name = parameters[0].toString();
+    String show_id = parameters[1].toString();
+    String venue_name = parameters[2].toString();
+    String location_id = parameters[3].toString();
+    String scheduled_date =parameters[4].toString();
+    String show_status = parameters[5].toString();
     if (location_id == null || location_id.trim().isEmpty() ||
             show_id == null || show_id.trim().isEmpty() ||
             venue_name == null || venue_name.trim().isEmpty() ||
