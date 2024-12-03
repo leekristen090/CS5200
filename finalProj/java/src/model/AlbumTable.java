@@ -6,6 +6,9 @@ import java.sql.Connection;
 
 import static model.TableUtil.isValidDate;
 
+/**
+ * This is the album table class which handles all CRUD operations on the album table.
+ */
 public class AlbumTable {
 
   /**
