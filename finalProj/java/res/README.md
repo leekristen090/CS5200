@@ -1,4 +1,10 @@
 # CS5200 Final Project Deliverable
+Provide a README section for creating and running the project. We need complete specifications 
+for building your project on our computer. Specify all libraries, software, etc. needed to run 
+the application. Specify expected installation directories. If you use a specific technology for 
+the project, the technology’s download page must be listed.
+
+# Delete all below this line before submission
 ## DB Application 
 You must have connectivity from your front end to your database in order to receive any points 
 for this task. The host languages supported are the latest versions are Java, Python, 
@@ -10,23 +16,23 @@ operations (create, read, update, delete).
 
 **The application, at a minimum needs to allow a user to:**
 
-- [ ] Create new tuples in the database
-  * More points allotted for different types of entities created                                     
-- [ ] Delete data tuples from the database
-  * More points allotted for different tables  supported for the delete operations               
+- [x] Create new tuples in the database
+  * More points allotted for different types of entities created                                      
 - [x] Read data from the database 
   * More points allotted for different tables read                                                                                  
-- [ ] Update tuples  in the database
+- [ ] Update tuples in the database
   * More points allotted for more tables providing the update operation                                       
+- [ ] Delete data tuples from the database
+  * More points allotted for different tables supported for the delete operations  
 
 **The project will be evaluated by the following criteria:**
 
 * Functionality provided by the project is a complete solution for the chosen data domain and 
 the chosen use of the application
 * Modularization of code, such as use of functions in the front end code as well as use of SQL 
-user defined procedures, functions, triggers, and events )         
+user defined procedures, functions, triggers, and events          
 * Error handling system (testing of arguments, user input, ability to gracefully handle errors 
-from the DBMS using techniques such as catch/try mechanism              
+from the DBMS using techniques such as catch/try mechanism)              
 * Submitted project is complete -> No missing files
 * Easy to use front end application
   * Prompts are easy to interpret, good feedback on input
@@ -35,8 +41,8 @@ from the DBMS using techniques such as catch/try mechanism
 Please use your project proposal report as a starting point to create your project’s final report. 
 Provide a single document that contains the following sections:
 - [ ] README 
-  * Provide a README section for creating and running the project. We need complete specifications for
-    building your project on our computer. Specify all libraries, software, etc. needed to run
+  * Provide a README section for creating and running the project. We need complete specifications 
+    for building your project on our computer. Specify all libraries, software, etc. needed to run
     the application. Specify expected installation directories. If you use a specific
     technology for the project, the technology’s download page must be listed.
 - [ ] Provide the Technical Specifications for the project 
