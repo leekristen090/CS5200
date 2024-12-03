@@ -1,4 +1,4 @@
-package view;
+package controller;
 
 import model.*;
 import javax.swing.*;
@@ -9,7 +9,7 @@ import java.sql.Connection;
  * This is the tuple adder class which helps with adding tuples to a desired table in the
  * team_sabrina database.
  */
-public class TupleAdder {
+public class TupleAdder implements ITupleAdder {
 
   /**
    * Add a tuple to the selected db table with its corresponding fields in the input panel.
@@ -18,7 +18,8 @@ public class TupleAdder {
    * @param connection db connection
    * @return true if tuple added successfully, false otherwise
    */
-  public static boolean addTuple(String tableName, JPanel inputPanel, Connection connection) {
+  @Override
+  public boolean addTuple(String tableName, JPanel inputPanel, Connection connection) {
     Component[] components = inputPanel.getComponents();
     String[] inputs = new String[components.length / 2];
 
@@ -29,31 +30,51 @@ public class TupleAdder {
     }
 
     try {
+      TableOps tableOps = null;
       switch (tableName) {
         case "album":
-          return AlbumTable.addTupleWithProcedure(connection, inputs[0], inputs[1]);
+          tableOps = new AlbumTable();
+          break;
+          //return AlbumTable.addTuple(connection, inputs[0], inputs[1]);
         case "customer":
-          return CustomerTable.addCustomerTuple(connection, inputs[0], inputs[1], inputs[2],
-                  inputs[3]);
+          tableOps = new CustomerTable();
+          break;
+          //return CustomerTable.addCustomerTuple(connection, inputs[0], inputs[1], inputs[2], inputs[3]);
         case "location":
-          return LocationTable.addLocationTuple(connection, inputs[0], inputs[1], inputs[2]);
+          //return LocationTable.addLocationTuple(connection, inputs[0], inputs[1], inputs[2]);
+          tableOps = new LocationTable();
+          break;
         case "opening_act":
-          return OpeningActTable.addOpeningActTuple(connection, inputs[0]);
+          //return OpeningActTable.addOpeningActTuple(connection, inputs[0]);
+          tableOps = new OpeningActTable();
+          break;
         case "opening_to_show":
-          return OpenToShowTable.addOpenToShowTuple(connection,inputs[0], inputs[1], inputs[2],
-                  inputs[3]);
+          //return OpenToShowTable.addOpenToShowTuple(connection,inputs[0], inputs[1], inputs[2], inputs[3]);
+          tableOps = new OpenToShowTable();
+          break;
         case "sabrina_show":
-          return SabrinaShowTable.addShowTuple(connection, inputs[0], inputs[1], inputs[2],
-                  inputs[3], inputs[4], inputs[5]);
+          //return SabrinaShowTable.addShowTuple(connection, inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5]);
+          tableOps = new SabrinaShowTable();
+          break;
         case "song":
-          return SongTable.addSongTuple(connection,inputs[0], inputs[1], inputs[2], inputs[3]);
+          //return SongTable.addSongTuple(connection,inputs[0], inputs[1], inputs[2], inputs[3]);
+          tableOps = new SongTable();
+          break;
         case "ticket_sales":
-          return TicketTable.addTicketSaleTuple(connection,inputs[0],inputs[1],inputs[2],inputs[3],
-                  inputs[4],inputs[5]);
+          //return TicketTable.addTicketSaleTuple(connection,inputs[0],inputs[1],inputs[2],inputs[3], inputs[4],inputs[5]);
+          tableOps = new TicketTable();
+          break;
         case "tour":
-          return TourTable.addTourTuple(connection, inputs[0], inputs[1], inputs[2], inputs[3]);
+          //return TourTable.addTourTuple(connection, inputs[0], inputs[1], inputs[2], inputs[3]);
+          tableOps = new TourTable();
+          break;
         case "venue":
-          return VenueTable.addVenueTuple(connection, inputs[0], inputs[1], inputs[2]);
+          //return VenueTable.addVenueTuple(connection, inputs[0], inputs[1], inputs[2]);
+          tableOps = new VenueTable();
+          break;
+      }
+      if (tableOps != null) {
+        return tableOps.addDBTuple(connection, inputs);
       }
     } catch (Exception e) {
       e.printStackTrace();
