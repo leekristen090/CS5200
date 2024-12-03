@@ -17,29 +17,49 @@ public class TableDisplayManager {
    * @return the desired table with its corresponding data
    */
   public static JTable getTable(String tableName, Connection connection) {
+    TableOps tableOps;
     switch (tableName) {
       case "album":
-        return AlbumTable.getAlbumTable(connection);
+        tableOps = new AlbumTable();
+        break;
       case "customer":
-        return CustomerTable.getCustomerTable(connection);
+        tableOps = new CustomerTable();
+        break;
       case "location":
-        return LocationTable.getLocationTable(connection);
+        //return LocationTable.getLocationTable(connection);
+        tableOps = new LocationTable();
+        break;
       case "opening_act":
-        return OpeningActTable.getOpeningActTable(connection);
+        //return OpeningActTable.getOpeningActTable(connection);
+        tableOps = new OpeningActTable();
+        break;
       case "opening_to_show":
-        return OpenToShowTable.getOpeningToShowTable(connection);
+        //return OpenToShowTable.getOpeningToShowTable(connection);
+        tableOps = new OpenToShowTable();
+        break;
       case "sabrina_show":
-        return SabrinaShowTable.getSabrinaShowTable(connection);
+        //return SabrinaShowTable.getSabrinaShowTable(connection);
+        tableOps = new SabrinaShowTable();
+        break;
       case "song":
-        return SongTable.getSongTable(connection);
+        //return SongTable.getSongTable(connection);
+        tableOps = new SongTable();
+        break;
       case "ticket_sales":
-        return TicketTable.getTicketTable(connection);
+        //return TicketTable.getTicketTable(connection);
+        tableOps = new TicketTable();
+        break;
       case "tour":
-        return TourTable.getTourTable(connection);
+        //return TourTable.getTourTable(connection);
+        tableOps = new TourTable();
+        break;
       case "venue":
-        return VenueTable.getVenueTable(connection);
+        //return VenueTable.getVenueTable(connection);
+        tableOps = new VenueTable();
+        break;
       default:
         throw new IllegalArgumentException("Unknown table: " + tableName);
     }
+    return tableOps.getDBTableData(connection);
   }
 }

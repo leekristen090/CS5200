@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.sql.Connection;
 
+import controller.TupleAdder;
+
 /**
  * This is the main window class which creates the window seen after a successful connection the
  * MySQL database.
@@ -111,7 +113,6 @@ public class MainWindow extends JFrame {
     inputPanel.setLayout(new GridLayout(0, 2, 10, 10)); // Dynamic rows
 
     // Update input fields when table selection changes
-    //tableSelector.addActionListener(e -> updateInputFields((String) tableSelector.getSelectedItem(), inputPanel));
     tableSelector.addActionListener(e ->
             InputFieldManager.updateFields((String) tableSelector.getSelectedItem(), inputPanel));
 
@@ -123,12 +124,30 @@ public class MainWindow extends JFrame {
     buttonPanel.add(submitButton);
     buttonPanel.add(cancelButton);
 
+//    // Submit button action
+//    submitButton.addActionListener(e -> {
+//      String selectedTable = (String) tableSelector.getSelectedItem();
+//      if (selectedTable != null) {
+//        //boolean success = handleAddTuple(selectedTable, inputPanel);
+//        boolean success = TupleAdder.addTuple(selectedTable, inputPanel, connection);
+//        if (success) {
+//          JOptionPane.showMessageDialog(this, "Tuple added successfully!");
+//          addDialog.dispose();
+//          displayTable(selectedTable); // show updated table
+//        } else {
+//          JOptionPane.showMessageDialog(this, "Failed to add tuple.",
+//                  "Error", JOptionPane.ERROR_MESSAGE);
+//        }
+//      }
+//    });
+
     // Submit button action
     submitButton.addActionListener(e -> {
       String selectedTable = (String) tableSelector.getSelectedItem();
       if (selectedTable != null) {
-        //boolean success = handleAddTuple(selectedTable, inputPanel);
-        boolean success = TupleAdder.addTuple(selectedTable, inputPanel, connection);
+        // Create an instance of TupleAdder and call addTuple on it
+        TupleAdder tupleAdder = new TupleAdder();
+        boolean success = tupleAdder.addTuple(selectedTable, inputPanel, connection);
         if (success) {
           JOptionPane.showMessageDialog(this, "Tuple added successfully!");
           addDialog.dispose();
