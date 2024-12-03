@@ -35,41 +35,31 @@ public class TupleAdder implements ITupleAdder {
         case "album":
           tableOps = new AlbumTable();
           break;
-          //return AlbumTable.addTuple(connection, inputs[0], inputs[1]);
         case "customer":
           tableOps = new CustomerTable();
           break;
-          //return CustomerTable.addCustomerTuple(connection, inputs[0], inputs[1], inputs[2], inputs[3]);
         case "location":
-          //return LocationTable.addLocationTuple(connection, inputs[0], inputs[1], inputs[2]);
           tableOps = new LocationTable();
           break;
         case "opening_act":
-          //return OpeningActTable.addOpeningActTuple(connection, inputs[0]);
           tableOps = new OpeningActTable();
           break;
         case "opening_to_show":
-          //return OpenToShowTable.addOpenToShowTuple(connection,inputs[0], inputs[1], inputs[2], inputs[3]);
           tableOps = new OpenToShowTable();
           break;
         case "sabrina_show":
-          //return SabrinaShowTable.addShowTuple(connection, inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5]);
           tableOps = new SabrinaShowTable();
           break;
         case "song":
-          //return SongTable.addSongTuple(connection,inputs[0], inputs[1], inputs[2], inputs[3]);
           tableOps = new SongTable();
           break;
         case "ticket_sales":
-          //return TicketTable.addTicketSaleTuple(connection,inputs[0],inputs[1],inputs[2],inputs[3], inputs[4],inputs[5]);
           tableOps = new TicketTable();
           break;
         case "tour":
-          //return TourTable.addTourTuple(connection, inputs[0], inputs[1], inputs[2], inputs[3]);
           tableOps = new TourTable();
           break;
         case "venue":
-          //return VenueTable.addVenueTuple(connection, inputs[0], inputs[1], inputs[2]);
           tableOps = new VenueTable();
           break;
       }
