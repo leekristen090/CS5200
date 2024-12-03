@@ -131,6 +131,24 @@ DELIMITER ;
 CALL get_future_show_with_available_seats();
 
 /*
+Procedure to retrieve show with venue and location names and sold seats
+*/
+DROP PROCEDURE IF EXISTS getAllShowsVenueLocationSeats;
+DELIMITER //
+CREATE PROCEDURE getAllShowsVenueLocationSeats()
+BEGIN 
+SELECT ss.tour_name,ss.show_id,ss.venue_name,city, country,scheduled_date, IFNULL(SUM(ticket_quantity),0) AS sold, v.capacity, (capacity - IFNULL(SUM(ticket_quantity), 0)) AS available 
+FROM sabrina_show AS ss LEFT JOIN ticket_sales AS ts ON ss.show_id = ts.show_id AND ss.tour_name = ts.tour_name
+	JOIN venue AS v ON ss.venue_name = v.venue_name AND ss.location_id = v.location_id
+    JOIN location AS l ON v.location_id = l.location_id
+GROUP BY ss.show_id, v.capacity,ss.venue_name,ss.tour_name
+ORDER BY ss.show_id
+;
+END //
+DELIMITER ;
+CALL getAllShowsVenueLocationSeats();
+
+/*
 Procedure to add tuple to album table
 */
 DROP PROCEDURE IF EXISTS addAblumTuple;
