@@ -29,7 +29,9 @@ public class MainWindow extends JFrame {
 
     // Create side panel with the "Show Table" button
     JPanel sidePanel = new JPanel();
-    sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.Y_AXIS));  // Vertical layout
+    //sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.Y_AXIS));  // Vertical layout
+    sidePanel.setLayout(new GridLayout(0, 1, 10, 10));
+    sidePanel.setBorder(BorderFactory.createTitledBorder("Operations"));
     showTableButton = new JButton("Show Table");
     sidePanel.add(showTableButton);
     updateTableButton = new JButton("Update Table");
