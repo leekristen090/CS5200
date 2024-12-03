@@ -124,23 +124,6 @@ public class MainWindow extends JFrame {
     buttonPanel.add(submitButton);
     buttonPanel.add(cancelButton);
 
-//    // Submit button action
-//    submitButton.addActionListener(e -> {
-//      String selectedTable = (String) tableSelector.getSelectedItem();
-//      if (selectedTable != null) {
-//        //boolean success = handleAddTuple(selectedTable, inputPanel);
-//        boolean success = TupleAdder.addTuple(selectedTable, inputPanel, connection);
-//        if (success) {
-//          JOptionPane.showMessageDialog(this, "Tuple added successfully!");
-//          addDialog.dispose();
-//          displayTable(selectedTable); // show updated table
-//        } else {
-//          JOptionPane.showMessageDialog(this, "Failed to add tuple.",
-//                  "Error", JOptionPane.ERROR_MESSAGE);
-//        }
-//      }
-//    });
-
     // Submit button action
     submitButton.addActionListener(e -> {
       String selectedTable = (String) tableSelector.getSelectedItem();

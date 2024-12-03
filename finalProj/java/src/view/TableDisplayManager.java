@@ -26,35 +26,27 @@ public class TableDisplayManager {
         tableOps = new CustomerTable();
         break;
       case "location":
-        //return LocationTable.getLocationTable(connection);
         tableOps = new LocationTable();
         break;
       case "opening_act":
-        //return OpeningActTable.getOpeningActTable(connection);
         tableOps = new OpeningActTable();
         break;
       case "opening_to_show":
-        //return OpenToShowTable.getOpeningToShowTable(connection);
         tableOps = new OpenToShowTable();
         break;
       case "sabrina_show":
-        //return SabrinaShowTable.getSabrinaShowTable(connection);
         tableOps = new SabrinaShowTable();
         break;
       case "song":
-        //return SongTable.getSongTable(connection);
         tableOps = new SongTable();
         break;
       case "ticket_sales":
-        //return TicketTable.getTicketTable(connection);
         tableOps = new TicketTable();
         break;
       case "tour":
-        //return TourTable.getTourTable(connection);
         tableOps = new TourTable();
         break;
       case "venue":
-        //return VenueTable.getVenueTable(connection);
         tableOps = new VenueTable();
         break;
       default:
