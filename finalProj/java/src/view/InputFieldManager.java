@@ -10,8 +10,8 @@ import javax.swing.*;
 public class InputFieldManager {
 
   /**
-   * Method to update the text field boxes according to which table is selected. I think this will
-   * be used for add.
+   * Method to update the text field boxes according to which table is selected. This will
+   * be used for adding tuples.
    * @param tableName selected table
    * @param inputPanel the input panel
    */
@@ -101,6 +101,34 @@ public class InputFieldManager {
         break;
       case "customer":
         addField(inputPanel, "Customer ID to delete:");
+        break;
+      case "location":
+        addField(inputPanel, "Location ID to delete:");
+        break;
+      case "opening_act":
+        addField(inputPanel, "Act ID to delete:");
+        break;
+      case "opening_to_show":
+        addField(inputPanel,  "Tour Name to delete:");
+        addField(inputPanel, "Show Id to delete:");
+        addField(inputPanel, "Act ID to delete:");
+        break;
+      case "sabrina_show":
+        addField(inputPanel, "Tour Name to delete:");
+        addField(inputPanel, "Show Id to delete:");
+        break;
+      case "song":
+        addField(inputPanel, "Song ID to delete:");
+        break;
+      case "ticket_sales":
+        addField(inputPanel, "Transaction ID to delete:");
+        break;
+      case "tour":
+        addField(inputPanel, "Tour name to delete:");
+        break;
+      case "venue":
+        addField(inputPanel, "Location ID to delete:");
+        addField(inputPanel, "Venue name to delete:");
         break;
       default:
         throw new IllegalArgumentException("Invalid table name: " + tableName);

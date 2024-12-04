@@ -5,6 +5,7 @@ import java.awt.*;
 import java.sql.Connection;
 
 import controller.TupleAdder;
+import controller.TupleDeleter;
 
 /**
  * This is the main window class which creates the window seen after a successful connection the
@@ -16,6 +17,7 @@ public class MainWindow extends JFrame {
   private final JButton updateTableButton;
   private final JButton addTupleButton;
   private final JButton deleteTupleButton;
+  private final JButton futureShowsButton;
   private final JPanel tablePanel;
   private final Connection connection;
 
@@ -42,6 +44,8 @@ public class MainWindow extends JFrame {
     sidePanel.add(addTupleButton);
     deleteTupleButton = new JButton("Delete Tuple");
     sidePanel.add(deleteTupleButton);
+    futureShowsButton = new JButton("Future Shows");
+    sidePanel.add(futureShowsButton);
     add(sidePanel, BorderLayout.WEST);
 
     // Create the table display panel (center)
@@ -53,6 +57,8 @@ public class MainWindow extends JFrame {
     showTableButton.addActionListener(e -> openTableSelectionDialog());
     addTupleButton.addActionListener(e -> openAddTupleDialog());
     deleteTupleButton.addActionListener(e -> openDeleteTupleDialog());
+    // eventually add update button action listener
+    //updateTableButton.addActionListener(e -> openUpdateTupleDialog());
 
     // Set window properties
     setSize(800, 600);
@@ -136,7 +142,7 @@ public class MainWindow extends JFrame {
           addDialog.dispose();
           displayTable(selectedTable); // show updated table
         } else {
-          JOptionPane.showMessageDialog(this, "Failed to add tuple.",
+          JOptionPane.showMessageDialog(this, "Failed to delete tuple.",
                   "Error", JOptionPane.ERROR_MESSAGE);
         }
       }
@@ -164,7 +170,8 @@ public class MainWindow extends JFrame {
   private void openDeleteTupleDialog() {
     JDialog deleteDialog = new JDialog(this, "Delete Tuple", true);
     deleteDialog.setLayout(new BorderLayout());
-    String[] tables = {"album","customer"};
+    String[] tables = {"album","customer","location","opening_act","opening_to_show",
+            "sabrina_show", "song", "ticket_sales","tour","venue"};
     JComboBox<String> tableSelector = new JComboBox<>(tables);
     JPanel inputPanel = new JPanel();
     inputPanel.setLayout(new GridLayout(0, 2, 10, 10));
@@ -180,6 +187,22 @@ public class MainWindow extends JFrame {
     buttonPanel.add(cancelButton);
 
     // add submit button action listener
+    submitButton.addActionListener(e -> {
+      String selectedTable = (String) tableSelector.getSelectedItem();
+      if (selectedTable != null) {
+        // Create an instance of TupleAdder and call addTuple on it
+        TupleDeleter tupleAdder = new TupleDeleter();
+        boolean success = tupleAdder.deleteTuple(selectedTable, inputPanel, connection);
+        if (success) {
+          JOptionPane.showMessageDialog(this, "Tuple has been deleted!");
+          deleteDialog.dispose();
+          displayTable(selectedTable); // show updated table
+        } else {
+          JOptionPane.showMessageDialog(this, "Failed to add tuple.",
+                  "Error", JOptionPane.ERROR_MESSAGE);
+        }
+      }
+    });
     cancelButton.addActionListener(e -> deleteDialog.dispose());
 
     deleteDialog.add(tableSelector, BorderLayout.NORTH);
