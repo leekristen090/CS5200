@@ -58,6 +58,19 @@ END //
 DELIMITER ;
 CALL getAllShowsVenueLocationSeats();
 
+DROP PROCEDURE IF EXISTS checkRowCount;
+DELIMITER //
+CREATE PROCEDURE checkRowCount(message_success VARCHAR(255), message_failure VARCHAR(255))
+BEGIN
+    IF ROW_COUNT() = 0 THEN
+        SELECT message_failure AS Message;
+    ELSE
+        SELECT message_success AS Message;
+    END IF;
+END //
+DELIMITER ;
+
+
 /*
 --------------------------------------------- ADD TUPLE ---------------------------------------------
 */
@@ -234,8 +247,13 @@ CREATE PROCEDURE deleteAlbumTuple (
 BEGIN 
 	DELETE FROM album 
     WHERE album_id = a_id;
+    CALL checkRowCount(
+        'Row successfully deleted.',
+        'No rows found with the given act_id.'
+    );
 END //
 DELIMITER ;
+call deleteAlbumTuple(90);
 
 /*
 Procedure to delete tuple from customer table
@@ -248,6 +266,10 @@ CREATE PROCEDURE deleteCustomerTuple (
 BEGIN 
 	DELETE FROM customer
     WHERE customer_id = c_id;
+    CALL checkRowCount(
+        'Row successfully deleted.',
+        'No rows found with the given customer_id.'
+    );
 END //
 DELIMITER ;
 
@@ -262,6 +284,10 @@ CREATE PROCEDURE deleteLocationTuple (
 BEGIN 
 	DELETE FROM location 
     WHERE location_id = l_id;
+    CALL checkRowCount(
+        'Row successfully deleted.',
+        'No rows found with the given location_id.'
+    );
 END //
 DELIMITER ;
 
@@ -276,6 +302,10 @@ CREATE PROCEDURE deleteOpeningActTuple (
 BEGIN
 	DELETE FROM opening_act
     WHERE act_id = a_id;
+    CALL checkRowCount(
+        'Row successfully deleted.',
+        'No rows found with the given act_id.'
+    );
 END //
 DELIMITER ;
 
@@ -292,6 +322,10 @@ CREATE PROCEDURE deleteOpenToShowTuple (
 BEGIN 
 	DELETE FROM opening_to_show
     WHERE tour_name = tour_name AND show_id = show_id AND act_id = act_id;
+    CALL checkRowCount(
+        'Row successfully deleted.',
+        'No rows found with the given PKs.'
+    );
 END //
 DELIMITER ;
 
@@ -307,6 +341,10 @@ CREATE PROCEDURE deleteShowTuple (
 BEGIN 
 	DELETE FROM sabrina_show
     WHERE tour_name = tour_name AND show_id = show_id;
+    CALL checkRowCount(
+        'Row successfully deleted.',
+        'No rows found with the given PKs.'
+    );
 END //
 DELIMITER ;
 
@@ -321,6 +359,10 @@ CREATE PROCEDURE deleteSongTuple(
 BEGIN 
 	DELETE FROM song 
     WHERE song_id = song_id;
+    CALL checkRowCount(
+        'Row successfully deleted.',
+        'No rows found with the given song_id.'
+    );
 END //
 DELIMITER ;
 
@@ -335,6 +377,10 @@ CREATE PROCEDURE deleteTicketTuple(
 BEGIN 
 	DELETE FROM ticket_sales
     WHERE transaction_id = transaction_id;
+    CALL checkRowCount(
+        'Row successfully deleted.',
+        'No rows found with the given PKs.'
+    );
 END //
 DELIMITER ;
 
@@ -349,6 +395,10 @@ CREATE PROCEDURE deleteTourTuple(
 BEGIN 
 	DELETE FROM tour 
     WHERE tour_name= tour_name;
+    CALL checkRowCount(
+        'Row successfully deleted.',
+        'No rows found with the given tour_name.'
+    );
 END //
 DELIMITER ;
 
@@ -364,6 +414,10 @@ CREATE PROCEDURE deleteVenueTuple (
 BEGIN 
 	DELETE FROM venue 
     WHERE location_id = location_id AND venue_name = venue_name;
+    CALL checkRowCount(
+        'Row successfully deleted.',
+        'No rows found with the given PKs.'
+    );
 END //
 DELIMITER ;
 
