@@ -4,8 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.sql.Connection;
 
-import controller.TupleAdder;
-import controller.TupleDeleter;
+import controller.*;
 
 /**
  * This is the main window class which creates the window seen after a successful connection the
@@ -38,7 +37,7 @@ public class MainWindow extends JFrame {
     sidePanel.setBorder(BorderFactory.createTitledBorder("Operations"));
     showTableButton = new JButton("Show Table");
     sidePanel.add(showTableButton);
-    updateTableButton = new JButton("Update Table");
+    updateTableButton = new JButton("Update Tuple");
     sidePanel.add(updateTableButton);
     addTupleButton = new JButton("Add Tuple");
     sidePanel.add(addTupleButton);
@@ -57,8 +56,7 @@ public class MainWindow extends JFrame {
     showTableButton.addActionListener(e -> openTableSelectionDialog());
     addTupleButton.addActionListener(e -> openAddTupleDialog());
     deleteTupleButton.addActionListener(e -> openDeleteTupleDialog());
-    // eventually add update button action listener
-    //updateTableButton.addActionListener(e -> openUpdateTupleDialog());
+    updateTableButton.addActionListener(e -> openUpdateDialog());
 
     // Set window properties
     setSize(800, 600);
@@ -142,7 +140,7 @@ public class MainWindow extends JFrame {
           addDialog.dispose();
           displayTable(selectedTable); // show updated table
         } else {
-          JOptionPane.showMessageDialog(this, "Failed to delete tuple.",
+          JOptionPane.showMessageDialog(this, "Failed to add tuple.",
                   "Error", JOptionPane.ERROR_MESSAGE);
         }
       }
@@ -191,14 +189,14 @@ public class MainWindow extends JFrame {
       String selectedTable = (String) tableSelector.getSelectedItem();
       if (selectedTable != null) {
         // Create an instance of TupleAdder and call addTuple on it
-        TupleDeleter tupleAdder = new TupleDeleter();
-        boolean success = tupleAdder.deleteTuple(selectedTable, inputPanel, connection);
+        TupleDeleter tupleDelete = new TupleDeleter();
+        boolean success = tupleDelete.deleteTuple(selectedTable, inputPanel, connection);
         if (success) {
           JOptionPane.showMessageDialog(this, "Tuple has been deleted!");
           deleteDialog.dispose();
           displayTable(selectedTable); // show updated table
         } else {
-          JOptionPane.showMessageDialog(this, "Failed to add tuple.",
+          JOptionPane.showMessageDialog(this, "Failed to delete tuple.",
                   "Error", JOptionPane.ERROR_MESSAGE);
         }
       }
@@ -214,6 +212,56 @@ public class MainWindow extends JFrame {
     deleteDialog.setSize(500, 400);
     deleteDialog.setLocationRelativeTo(this);
     deleteDialog.setVisible(true);
+  }
+
+  /**
+   * Helper method to open popup window for ability to update a tuple from specified table.
+   */
+  private void openUpdateDialog() {
+    JDialog updateDialog = new JDialog(this, "Update Tuple", true);
+    updateDialog.setLayout(new BorderLayout());
+    String[] tables = {"album","customer","location","opening_act","opening_to_show",
+            "sabrina_show", "song", "ticket_sales","tour","venue"};
+    JComboBox<String> tableSelector = new JComboBox<>(tables);
+    JPanel inputPanel = new JPanel();
+    inputPanel.setLayout(new GridLayout(0, 2, 10, 10));
+
+    tableSelector.addActionListener(e ->
+            InputFieldManager.updateUpdateFields((String) tableSelector.getSelectedItem(),
+                    inputPanel));
+
+    JPanel buttonPanel = new JPanel();
+    JButton submitButton = new JButton("Submit");
+    JButton cancelButton = new JButton("Cancel");
+    buttonPanel.add(submitButton);
+    buttonPanel.add(cancelButton);
+
+    submitButton.addActionListener(e -> {
+      String selectedTable = (String) tableSelector.getSelectedItem();
+      if (selectedTable != null) {
+        // Create an instance of TupleAdder and call addTuple on it
+        TupleUpdater tUpdater = new TupleUpdater();
+        boolean success = tUpdater.updateTuple(selectedTable, inputPanel, connection);
+        if (success) {
+          JOptionPane.showMessageDialog(this, "Tuple has been updated!");
+          updateDialog.dispose();
+          displayTable(selectedTable); // show updated table
+        } else {
+          JOptionPane.showMessageDialog(this, "Failed to update tuple.",
+                  "Error", JOptionPane.ERROR_MESSAGE);
+        }
+      }
+    });
+    cancelButton.addActionListener(e -> updateDialog.dispose());
+
+    updateDialog.add(tableSelector, BorderLayout.NORTH);
+    updateDialog.add(new JScrollPane(inputPanel), BorderLayout.CENTER);
+    updateDialog.add(buttonPanel, BorderLayout.SOUTH);
+
+    InputFieldManager.updateUpdateFields((String) tableSelector.getSelectedItem(), inputPanel);
+    updateDialog.setSize(500, 400);
+    updateDialog.setLocationRelativeTo(this);
+    updateDialog.setVisible(true);
   }
 
 
