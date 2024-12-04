@@ -78,17 +78,17 @@ DELIMITER ;
 /*
 Procedure to add tuple to album table
 */
-DROP PROCEDURE IF EXISTS addAblumTuple;
+DROP PROCEDURE IF EXISTS addAlbumTuple;
 DELIMITER //
 CREATE PROCEDURE addAlbumTuple(
-	album_name VARCHAR(64),
-    release_date DATE
+	p_album_name VARCHAR(64),
+    p_release_date DATE
 )
 BEGIN 
-	INSERT INTO album (album_name, release_date) VALUES (album_name, release_date);
+	INSERT INTO album (album_name, release_date) VALUES (p_album_name, p_release_date);
 END //
 DELIMITER ;
-
+CALL addAlbumTuple('the fakest','2002-08-11');
 /*
 procedure to add tuple to customer
 */
@@ -249,7 +249,7 @@ BEGIN
     WHERE album_id = a_id;
     CALL checkRowCount(
         'Row successfully deleted.',
-        'No rows found with the given act_id.'
+        'No rows found with the given album_id.'
     );
 END //
 DELIMITER ;
@@ -417,6 +417,33 @@ BEGIN
     CALL checkRowCount(
         'Row successfully deleted.',
         'No rows found with the given PKs.'
+    );
+END //
+DELIMITER ;
+
+/*
+--------------------------------------------- UPDATE ---------------------------------------------
+*/
+
+/*
+update album tuple
+*/
+DROP PROCEDURE IF EXISTS updateAlbumTuple;
+DELIMITER //
+CREATE PROCEDURE updateAlbumTuple(
+	chosen_album_id INT,
+	new_album_name VARCHAR(64), 
+	new_release_date DATE 
+)
+BEGIN 
+	UPDATE album
+    SET 
+		album_name = new_album_name,
+		release_date = new_release_date
+    WHERE album_id = chosen_album_id;
+    CALL checkRowCount(
+        'Row successfully updated.',
+        'No rows found with the given album_id.'
     );
 END //
 DELIMITER ;
