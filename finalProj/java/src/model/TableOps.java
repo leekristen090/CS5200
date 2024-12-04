@@ -19,6 +19,13 @@ public interface TableOps {
    * @return true if tuple added successfully, false otherwise
    */
   boolean addDBTuple(Connection connection, Object[] parameters);
-  //boolean updateTuple(Connection connection, Object... parameters);
-  //boolean deleteTuple(Connection connection, Object... parameters);
+
+  /**
+   * Method to delete a tuple from a given table by its primary key value.
+   * @param connection db connection
+   * @param primaryKey PK of the tuple to be deleted
+   * @return true if tuple successfully deleted, false otherwise
+   */
+  boolean deleteDBTuple(Connection connection, Object[] primaryKey);
+  //boolean updateTuple(Connection connection, String tableName, String primaryKey);
 }

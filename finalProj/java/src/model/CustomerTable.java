@@ -69,4 +69,32 @@ public class CustomerTable implements TableOps {
     }
   }
 
+  /**
+   * Method to delete a tuple from a given table by its primary key value.
+   *
+   * @param connection db connection
+   * @param primaryKey PK of the tuple to be deleted
+   * @return true if tuple successfully deleted, false otherwise
+   */
+  @Override
+  public boolean deleteDBTuple(Connection connection, Object[] primaryKey) {
+    if (primaryKey.length != 1) {
+      JOptionPane.showMessageDialog(null,
+              "Invalid number of customer parameters.",
+              "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+
+    String call = "{CALL deleteCustomerTuple(?)}";
+    try {
+      int cId = Integer.parseInt(primaryKey[0].toString());
+      return TableUtil.executeProcedure(connection, call, cId);
+    } catch (Exception e) {
+      JOptionPane.showMessageDialog(null,
+              "Error deleting tuple: " + e.getMessage(),
+              "Database Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+  }
+
 }

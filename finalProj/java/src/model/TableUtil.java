@@ -77,6 +77,18 @@ public class TableUtil {
 
       // Execute procedure
       callableStatement.execute();
+      boolean hasResultSet = callableStatement.execute();
+
+      // Check if there's a result set (message)
+      if (hasResultSet) {
+        try (ResultSet rs = callableStatement.getResultSet()) {
+          if (rs.next()) {
+            String message = rs.getString("Message");
+            JOptionPane.showMessageDialog(null, message,
+                    "Procedure Output", JOptionPane.INFORMATION_MESSAGE);
+          }
+        }
+      }
       return true;
 
     } catch (SQLException e) {

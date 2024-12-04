@@ -73,4 +73,16 @@ public class TicketTable implements TableOps {
     }
 
   }
+
+  /**
+   * Method to delete a tuple from a given table by its primary key value.
+   *
+   * @param connection db connection
+   * @param primaryKey PK of the tuple to be deleted
+   * @return true if tuple successfully deleted, false otherwise
+   */
+  @Override
+  public boolean deleteDBTuple(Connection connection, Object[] primaryKey) {
+    return false;
+  }
 }
