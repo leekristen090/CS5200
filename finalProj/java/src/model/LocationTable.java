@@ -1,9 +1,12 @@
 package model;
 
 import java.sql.Connection;
-
 import javax.swing.*;
 
+/**
+ * This is the location table class which handles CRUD operations on the location table in
+ * the team_sabrina database.
+ */
 public class LocationTable implements TableOps {
 
   /**
@@ -77,5 +80,17 @@ public class LocationTable implements TableOps {
               "Database Error", JOptionPane.ERROR_MESSAGE);
       return false;
     }
+  }
+
+  /**
+   * Method to update a tuple from location table with user inputs.
+   *
+   * @param connection db connection
+   * @param parameters parameters for the location table
+   * @return true if tuple updated successfully, false otherwise
+   */
+  @Override
+  public boolean updateDBTuple(Connection connection, Object[] parameters) {
+    return false;
   }
 }

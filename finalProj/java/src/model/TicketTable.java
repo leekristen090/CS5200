@@ -101,4 +101,16 @@ public class TicketTable implements TableOps {
       return false;
     }
   }
+
+  /**
+   * Method to update a tuple from ticket_sales table with user inputs.
+   *
+   * @param connection db connection
+   * @param parameters parameters for the ticket_sales table
+   * @return true if tuple updated successfully, false otherwise
+   */
+  @Override
+  public boolean updateDBTuple(Connection connection, Object[] parameters) {
+    return false;
+  }
 }

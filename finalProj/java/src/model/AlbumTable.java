@@ -50,7 +50,6 @@ public class AlbumTable implements TableOps {
       return false;
     }
     String call = "{CALL addAlbumTuple(?, ?)}";
-    //return TableUtil.executeProcedure(connection, call, albumName, releaseDate);
     try {
       return TableUtil.executeProcedure(connection, call, albumName, releaseDate);
     } catch (Exception e) {
@@ -78,7 +77,7 @@ public class AlbumTable implements TableOps {
       return false;
     }
 
-    String call = "{CALL deleteAlbumTuple(?)}";
+    String call = "CALL deleteAlbumTuple(?)";
     try {
       int albumId = Integer.parseInt(primaryKey[0].toString());
       return TableUtil.executeProcedure(connection, call, albumId);
@@ -89,43 +88,17 @@ public class AlbumTable implements TableOps {
       return false;
     }
   }
-  //  @Override
-//  public boolean deleteDBTuple(Connection connection, Object[] primaryKey) {
-//    if (primaryKey.length != 1) {
-//      JOptionPane.showMessageDialog(null,
-//              "Invalid number of album parameters.",
-//              "Input Error", JOptionPane.ERROR_MESSAGE);
-//      return false;
-//    }
-//
-//    String call = "{CALL deleteAlbumTuple(?)}";
-//    try {
-//      int albumId = Integer.parseInt(primaryKey[0].toString());
-//      try (CallableStatement callableStatement = connection.prepareCall(call)) {
-//        callableStatement.setInt(1, albumId);
-//
-//        // Execute the procedure
-//        boolean hasResultSet = callableStatement.execute();
-//
-//        // Check if there's a result set (message)
-//        if (hasResultSet) {
-//          try (ResultSet rs = callableStatement.getResultSet()) {
-//            if (rs.next()) {
-//              String message = rs.getString("Message");
-//              JOptionPane.showMessageDialog(null, message,
-//                      "Procedure Output", JOptionPane.INFORMATION_MESSAGE);
-//            }
-//          }
-//        }
-//      }
-//      return true;
-//
-//    } catch (Exception e) {
-//      JOptionPane.showMessageDialog(null,
-//              "Error deleting tuple: " + e.getMessage(),
-//              "Database Error", JOptionPane.ERROR_MESSAGE);
-//      return false;
-//    }
-//  }
+
+  /**
+   * Method to update a tuple from album table with user inputs.
+   *
+   * @param connection db connection
+   * @param parameters parameters for the album table
+   * @return true if tuple updated successfully, false otherwise
+   */
+  @Override
+  public boolean updateDBTuple(Connection connection, Object[] parameters) {
+    return false;
+  }
 
 }

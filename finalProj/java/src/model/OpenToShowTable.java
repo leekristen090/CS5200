@@ -87,4 +87,16 @@ public class OpenToShowTable implements TableOps {
       return false;
     }
   }
+
+  /**
+   * Method to update a tuple from opening_to_show table with user inputs.
+   *
+   * @param connection db connection
+   * @param parameters parameters for the opening_to_show table
+   * @return true if tuple updated successfully, false otherwise
+   */
+  @Override
+  public boolean updateDBTuple(Connection connection, Object[] parameters) {
+    return false;
+  }
 }

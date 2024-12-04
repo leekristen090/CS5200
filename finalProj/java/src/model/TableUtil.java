@@ -76,7 +76,7 @@ public class TableUtil {
       }
 
       // Execute procedure
-      callableStatement.execute();
+      //callableStatement.execute();
       boolean hasResultSet = callableStatement.execute();
 
       // Check if there's a result set (message)
@@ -137,4 +137,3 @@ public class TableUtil {
 
 
 }
-

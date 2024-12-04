@@ -97,4 +97,16 @@ public class CustomerTable implements TableOps {
     }
   }
 
+  /**
+   * Method to update a tuple from given table with user inputs.
+   *
+   * @param connection db connection
+   * @param parameters parameters for the table
+   * @return true if tuple updated successfully, false otherwise
+   */
+  @Override
+  public boolean updateDBTuple(Connection connection, Object[] parameters) {
+    return false;
+  }
+
 }

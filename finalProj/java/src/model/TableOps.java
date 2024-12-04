@@ -27,5 +27,12 @@ public interface TableOps {
    * @return true if tuple successfully deleted, false otherwise
    */
   boolean deleteDBTuple(Connection connection, Object[] primaryKey);
-  //boolean updateTuple(Connection connection, String tableName, String primaryKey);
+
+  /**
+   * Method to update a tuple from given table with user inputs.
+   * @param connection db connection
+   * @param parameters parameters for the table
+   * @return true if tuple updated successfully, false otherwise
+   */
+  boolean updateDBTuple(Connection connection, Object[] parameters);
 }
