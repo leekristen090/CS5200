@@ -64,7 +64,23 @@ public class VenueTable implements TableOps {
    */
   @Override
   public boolean deleteDBTuple(Connection connection, Object[] primaryKey) {
-    return false;
-  }
+    if (primaryKey.length != 2) {
+      JOptionPane.showMessageDialog(null,
+              "Invalid number of venue parameters.",
+              "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+
+    String call = "{CALL deleteVenueTuple(?, ?)}";
+    try {
+      int locationID = Integer.parseInt(primaryKey[0].toString());
+      String venueName = primaryKey[1].toString();
+      return TableUtil.executeProcedure(connection, call, locationID, venueName);
+    } catch (Exception e) {
+      JOptionPane.showMessageDialog(null,
+              "Error deleting tuple: " + e.getMessage(),
+              "Database Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }  }
 
 }

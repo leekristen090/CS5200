@@ -66,9 +66,10 @@ public class LocationTable implements TableOps {
       return false;
     }
 
-    int lid = Integer.parseInt(primaryKey[0].toString());
+
     String call = "{CALL deleteLocationTuple(?)}";
     try {
+      int lid = Integer.parseInt(primaryKey[0].toString());
       return TableUtil.executeProcedure(connection, call, lid);
     } catch (Exception e) {
       JOptionPane.showMessageDialog(null,

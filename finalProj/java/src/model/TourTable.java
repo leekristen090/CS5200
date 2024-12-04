@@ -75,7 +75,23 @@ public class TourTable implements TableOps {
    */
   @Override
   public boolean deleteDBTuple(Connection connection, Object[] primaryKey) {
-    return false;
+    if (primaryKey.length != 1) {
+      JOptionPane.showMessageDialog(null,
+              "Invalid number of tour parameters.",
+              "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+
+    String call = "{CALL deleteTourTuple(?, ?)}";
+    try {
+      String tour_name = primaryKey[0].toString();
+      return TableUtil.executeProcedure(connection, call, tour_name);
+    } catch (Exception e) {
+      JOptionPane.showMessageDialog(null,
+              "Error deleting tuple: " + e.getMessage(),
+              "Database Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
   }
 
 }

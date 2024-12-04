@@ -83,6 +83,22 @@ public class TicketTable implements TableOps {
    */
   @Override
   public boolean deleteDBTuple(Connection connection, Object[] primaryKey) {
-    return false;
+    if (primaryKey.length != 1) {
+      JOptionPane.showMessageDialog(null,
+              "Invalid number of ticket parameters.",
+              "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+
+    String call = "{CALL deleteTicketTuple(?)}";
+    try {
+      int transaction = Integer.parseInt(primaryKey[0].toString());
+      return TableUtil.executeProcedure(connection, call, transaction);
+    } catch (Exception e) {
+      JOptionPane.showMessageDialog(null,
+              "Error deleting tuple: " + e.getMessage(),
+              "Database Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
   }
 }

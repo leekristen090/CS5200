@@ -76,7 +76,10 @@ public class OpenToShowTable implements TableOps {
 
     String call = "{CALL deleteOpenToShowTuple(?, ?, ?)}";
     try {
-      return TableUtil.executeProcedure(connection, call, primaryKey);
+      String tourName = (String) primaryKey[0];
+      int sId = Integer.parseInt(primaryKey[1].toString());
+      int actId = Integer.parseInt(primaryKey[2].toString());
+      return TableUtil.executeProcedure(connection, call, tourName, sId, actId);
     } catch (Exception e) {
       JOptionPane.showMessageDialog(null,
               "Error deleting tuple: " + e.getMessage(),

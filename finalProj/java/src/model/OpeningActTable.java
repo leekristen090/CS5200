@@ -65,7 +65,8 @@ public class OpeningActTable implements TableOps {
 
     String call = "{CALL deleteOpeningActTuple(?)}";
     try {
-      return TableUtil.executeProcedure(connection, call, primaryKey);
+      int actId = Integer.parseInt(primaryKey[0].toString());
+      return TableUtil.executeProcedure(connection, call, actId);
     } catch (Exception e) {
       JOptionPane.showMessageDialog(null,
               "Error deleting tuple: " + e.getMessage(),

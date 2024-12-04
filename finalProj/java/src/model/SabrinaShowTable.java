@@ -78,6 +78,23 @@ public class SabrinaShowTable implements TableOps {
    */
   @Override
   public boolean deleteDBTuple(Connection connection, Object[] primaryKey) {
-    return false;
+    if (primaryKey.length != 2) {
+      JOptionPane.showMessageDialog(null,
+              "Invalid number of show parameters.",
+              "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+
+    String call = "{CALL deleteShowTuple(?, ?)}";
+    try {
+      String tour_name = primaryKey[0].toString();
+      int sId = Integer.parseInt(primaryKey[1].toString());
+      return TableUtil.executeProcedure(connection, call, tour_name, sId);
+    } catch (Exception e) {
+      JOptionPane.showMessageDialog(null,
+              "Error deleting tuple: " + e.getMessage(),
+              "Database Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
   }
 }
