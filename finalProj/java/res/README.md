@@ -4,16 +4,16 @@ for building your project on our computer. Specify all libraries, software, etc.
 the application. Specify expected installation directories. If you use a specific technology for 
 the project, the technology’s download page must be listed.
 
-This document holds information and instructions on how to set up and run this project.
+This document holds information and instructions for setting up and running this project.
 ## Software used for creating and running this project:
 ### MySQL community server (Latest Version) and MySQL Workbench (Latest Version)
-Server Link: https://dev.mysql.com/downloads/mysql/
+**Server Link:** https://dev.mysql.com/downloads/mysql/
 
-Workbench Link: https://dev.mysql.com/downloads/workbench/
+**Workbench Link:** https://dev.mysql.com/downloads/workbench/
 
-Canvas Link:https://northeastern.instructure.com/courses/192325/pages/do-install-mysql-relational-database?module_item_id=10552701
+**Canvas Link:** https://northeastern.instructure.com/courses/192325/pages/do-install-mysql-relational-database?module_item_id=10552701
 
-Workbench Installation directory: Typically installed under /usr/local/mysql
+**Workbench Installation Directory:** Typically installed under /usr/local/mysql
 
 Above you will find links to the MySQL Community Download page for MySQL community server 
 (Latest Version) and MySQL Workbench (Latest Version). There is also a link to the course canvas 
@@ -22,31 +22,31 @@ page which has instructions on how to download and set up the environment based 
 Create a new database and import the team_sabrina schema.
 
 ### Java SE Development Kit, version 11
-Link: https://www.oracle.com/java/technologies/downloads/#java11?er=221886
+**Link:** https://www.oracle.com/java/technologies/downloads/#java11?er=221886
 
 Ensure that you choose the file that matches your OS. Download and navigate to where your computer 
 places internet downloads. Double click and install.
 
 ### Connector/J
-Link: https://dev.mysql.com/downloads/
+**Link:** https://dev.mysql.com/downloads/
 
 Follow the link above to the download page.
 Choose the platform independent version and navigate to where your computer places internet
 downloads. Double click and install. I found my download in finder under the downloads section.
 
-Installation directory: Include the .jar file in the project dependencies or classpath.
+**Installation Directory:** Include the .jar file in the project dependencies or classpath.
 
 ### IntelliJ IDEA (Latest Version)
-Community Version Link: https://www.jetbrains.com/idea/
+**Community Version Link:** https://www.jetbrains.com/idea/
 
-Academic Licence Link: https://www.jetbrains.com/community/education/#students
+**Academic Licence Link:** https://www.jetbrains.com/community/education/#students
 
 The community version can be downloaded for free, but there is also the option to licence the 
 ultimate edition as students and teachers. Make sure you download the 
 correct version for you OS. Navigate to where your computer places internet
 downloads and double click. I found my download in finder under the downloads section.
 
-Installation directory: /Library/Java/JavaVirtualMachines/jdk<version>.jdk/Contents/Home
+**Installation Directory:** /Library/Java/JavaVirtualMachines/jdk<version>.jdk/Contents/Home
 
 Create a new project to run this database application. Move the provided code into the project 
 structure where you created this new project.To run, navigate to the file called 'Main.java' and
@@ -57,8 +57,6 @@ right-click every time after the initial right-click.
 You can also have Main.java be the file you are viewing, and navigate to the play button 
 mentioned above. If you haven't right-clicked the Main.java tab, then you will see the prompt 
 'Run current file'.
-
-### How to Run 
 
 ## Libraries
 This project uses the following libraries and frameworks:
