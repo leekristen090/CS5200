@@ -107,6 +107,52 @@ public class SabrinaShowTable implements TableOps {
    */
   @Override
   public boolean updateDBTuple(Connection connection, Object[] parameters) {
-    return false;
+    String tour_name = parameters[0].toString();
+    String show_id = parameters[1].toString();
+    String venue_name = parameters[2].toString();
+    String location_id = parameters[3].toString();
+    String scheduled_date = parameters[4].toString();
+    String show_status = parameters[5].toString();
+    if (tour_name == null || tour_name.trim().isEmpty()
+            || show_id == null || show_id.trim().isEmpty()) {
+      JOptionPane.showMessageDialog(null,
+              "Tour name or show ID cannot be empty.",
+              "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+    int sId = Integer.parseInt(show_id);
+
+    if (location_id == null || location_id.trim().isEmpty()) {
+      location_id = null;
+    }
+    Integer lid = null;
+    if (location_id != null) {
+      lid = Integer.parseInt(location_id);
+    }
+    if (venue_name == null || venue_name.trim().isEmpty()) {
+      venue_name = null;
+    }
+    if (show_status == null || show_status.trim().isEmpty()) {
+      show_status = null;
+    }
+    if (scheduled_date == null || scheduled_date.trim().isEmpty()) {
+      scheduled_date = null;
+    } else if (!isValidDate(scheduled_date)) {
+      JOptionPane.showMessageDialog(null, "Invalid date format. "
+              + "Please use YYYY-MM-DD.", "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+
+    String call = "{CALL updateShowTuple(?, ?, ?, ?, ?, ?)}";
+    try {
+      return TableUtil.executeProcedure(connection, call, tour_name, sId, venue_name,
+              lid, scheduled_date, show_status);
+    } catch (Exception e) {
+      JOptionPane.showMessageDialog(null,
+              "Error updating tuple: " + e.getMessage(),
+              "Database Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
   }
+
 }

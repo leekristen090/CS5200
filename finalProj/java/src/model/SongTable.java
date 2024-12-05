@@ -94,7 +94,48 @@ public class SongTable implements TableOps {
    */
   @Override
   public boolean updateDBTuple(Connection connection, Object[] parameters) {
-    return false;
+    String songId = (String) parameters[0];
+    String songName = (String) parameters[1];
+    String albumId = (String) parameters[2];
+    String tourName = (String) parameters[3];
+    String orderPlayed = (String) parameters[4];
+
+    if (songId == null || songId.trim().isEmpty()) {
+      JOptionPane.showMessageDialog(null, "Song ID cannot be empty.",
+              "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+    int sid = Integer.parseInt(songId);
+    if (songName == null || songName.trim().isEmpty()) {
+      songName = null;
+    }
+    Integer aid = null;
+    if (albumId == null || albumId.trim().isEmpty()) {
+      albumId = null;
+    }
+    if (albumId != null) {
+      aid = Integer.parseInt(albumId);
+    }
+    if (tourName == null || tourName.trim().isEmpty()) {
+      tourName = null;
+    }
+    Integer oP = null;
+    if (orderPlayed == null || orderPlayed.trim().isEmpty()) {
+      orderPlayed = null;
+    }
+    if (orderPlayed != null) {
+      oP = Integer.parseInt(orderPlayed);
+    }
+
+    String call = "{CALL updateSongTuple(?, ?, ?, ?, ?)}";
+    try {
+      return TableUtil.executeProcedure(connection, call, sid, songName, aid, tourName, oP);
+    } catch (Exception e) {
+      JOptionPane.showMessageDialog(null,
+              "Error updating tuple: " + e.getMessage(),
+              "Database Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
   }
 
 }

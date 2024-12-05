@@ -84,7 +84,28 @@ public class OpeningActTable implements TableOps {
    */
   @Override
   public boolean updateDBTuple(Connection connection, Object[] parameters) {
-    return false;
+    String actId = (String) parameters[0];
+    String actName = (String) parameters[1];
+    if (actId == null || actId.trim().isEmpty()) {
+      JOptionPane.showMessageDialog(null, "Act ID cannot be empty.",
+              "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+
+    int id = Integer.parseInt(actId);
+
+    if (actName == null || actName.trim().isEmpty()) {
+      actName = null;
+    }
+    String call = "{CALL updateOpeningActTuple(?, ?)}";
+    try {
+      return TableUtil.executeProcedure(connection, call, id, actName);
+    } catch (Exception e) {
+      JOptionPane.showMessageDialog(null,
+              "Error updating tuple: " + e.getMessage(),
+              "Database Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
   }
 
 }

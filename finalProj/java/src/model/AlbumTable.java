@@ -72,12 +72,12 @@ public class AlbumTable implements TableOps {
   public boolean deleteDBTuple(Connection connection, Object[] primaryKey) {
     if (primaryKey.length != 1) {
       JOptionPane.showMessageDialog(null,
-              "Invalid number of album parameters.",
+              "Invalid number of album parameters for deletion.",
               "Input Error", JOptionPane.ERROR_MESSAGE);
       return false;
     }
 
-    String call = "CALL deleteAlbumTuple(?)";
+    String call = "{CALL deleteAlbumTuple(?)}";
     try {
       int albumId = Integer.parseInt(primaryKey[0].toString());
       return TableUtil.executeProcedure(connection, call, albumId);
@@ -88,17 +88,62 @@ public class AlbumTable implements TableOps {
       return false;
     }
   }
-
   /**
-   * Method to update a tuple from album table with user inputs.
-   *
-   * @param connection db connection
-   * @param parameters parameters for the album table
-   * @return true if tuple updated successfully, false otherwise
+   * Method to update a tuple in the album table.
+   * @param connection the database connection
+   * @param parameters array containing album_id, new_album_name, and new_release_date
+   * @return true if the tuple was successfully updated, false otherwise
    */
-  @Override
   public boolean updateDBTuple(Connection connection, Object[] parameters) {
-    return false;
+    if (parameters.length != 3) {
+      JOptionPane.showMessageDialog(null,
+              "Invalid number of album parameters.",
+              "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+
+    String albumId = (String) parameters[0];
+    String newAlbumName = (String) parameters[1];
+    String newReleaseDate = (String) parameters[2];
+
+    if (albumId == null || albumId.trim().isEmpty()) {
+      JOptionPane.showMessageDialog(null, "Album ID cannot be empty.",
+              "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+
+    int id;
+    try {
+      id = Integer.parseInt(albumId);
+    } catch (NumberFormatException e) {
+      JOptionPane.showMessageDialog(null, "Invalid album ID format.",
+              "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+
+    // Replace empty strings with null for the stored procedure
+    if (newAlbumName == null || newAlbumName.trim().isEmpty()) {
+      newAlbumName = null; // Pass null for album name
+    }
+    if (newReleaseDate == null || newReleaseDate.trim().isEmpty()) {
+      newReleaseDate = null; // Pass null for release date
+    } else if (!isValidDate(newReleaseDate)) {
+      JOptionPane.showMessageDialog(null, "Invalid date format. "
+              + "Please use YYYY-MM-DD.", "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+
+    // Prepare and execute stored procedure
+    String call = "{CALL updateAlbumTuple(?, ?, ?)}";
+    try {
+      return TableUtil.executeProcedure(connection, call, id, newAlbumName, newReleaseDate);
+    } catch (Exception e) {
+      JOptionPane.showMessageDialog(null,
+              "Error updating tuple: " + e.getMessage(),
+              "Database Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
   }
+
 
 }

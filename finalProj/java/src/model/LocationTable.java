@@ -91,6 +91,45 @@ public class LocationTable implements TableOps {
    */
   @Override
   public boolean updateDBTuple(Connection connection, Object[] parameters) {
-    return false;
+    String locationID = (String) parameters[0];
+    String city = (String) parameters[1];
+    String stateRegion = (String) parameters[2];
+    String country = (String) parameters[3];
+
+    if (locationID == null || locationID.trim().isEmpty()) {
+      JOptionPane.showMessageDialog(null, "Location ID cannot be empty.",
+              "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+
+    int id;
+    try {
+      id = Integer.parseInt(locationID);
+    } catch (NumberFormatException e) {
+      JOptionPane.showMessageDialog(null, "Invalid location ID format.",
+              "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+
+    if (city == null || city.trim().isEmpty()) {
+      city = null;
+    }
+    if (stateRegion == null || stateRegion.trim().isEmpty()) {
+      stateRegion = null;
+    }
+    if (country == null || country.trim().isEmpty()) {
+      country = null;
+    }
+
+    String call = "{CALL updateLocationTuple(?, ?, ?, ?)}";
+    try {
+      return TableUtil.executeProcedure(connection, call, id, city, stateRegion, country);
+    } catch (Exception e) {
+      JOptionPane.showMessageDialog(null,
+              "Error updating tuple: " + e.getMessage(),
+              "Database Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
   }
+
 }

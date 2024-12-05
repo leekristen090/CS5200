@@ -97,6 +97,50 @@ public class OpenToShowTable implements TableOps {
    */
   @Override
   public boolean updateDBTuple(Connection connection, Object[] parameters) {
-    return false;
+    String tourName = (String) parameters[0];
+    String showId = (String) parameters[1];
+    String actId = (String) parameters[2];
+    String performanceOrder = (String) parameters[3];
+
+    if (tourName == null || tourName.trim().isEmpty()
+            || showId == null || showId.trim().isEmpty()) {
+      JOptionPane.showMessageDialog(null,
+              "Tour name and/or show ID cannot be empty.",
+              "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+    int sid;
+    try {
+      sid = Integer.parseInt(showId);
+    } catch (NumberFormatException e) {
+      JOptionPane.showMessageDialog(null, "Invalid show ID format.",
+              "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+
+    if (actId == null || actId.trim().isEmpty()) {
+      actId = null;
+    }
+    Integer aid = null;
+    if (actId != null) {
+      aid = Integer.parseInt(actId);
+    }
+    if (performanceOrder == null || performanceOrder.trim().isEmpty()) {
+      performanceOrder = null;
+    }
+    Integer pid = null;
+    if (performanceOrder != null) {
+      pid = Integer.parseInt(performanceOrder);
+    }
+
+    String call = "{CALL updateOpenToShowTuple(?, ?, ?, ?)}";
+    try {
+      return TableUtil.executeProcedure(connection, call, tourName, sid, aid, pid);
+    } catch (Exception e) {
+      JOptionPane.showMessageDialog(null,
+              "Error updating tuple: " + e.getMessage(),
+              "Database Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
   }
 }

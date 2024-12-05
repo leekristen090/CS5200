@@ -80,7 +80,7 @@ public class CustomerTable implements TableOps {
   public boolean deleteDBTuple(Connection connection, Object[] primaryKey) {
     if (primaryKey.length != 1) {
       JOptionPane.showMessageDialog(null,
-              "Invalid number of customer parameters.",
+              "Invalid number of customer parameters for deletion.",
               "Input Error", JOptionPane.ERROR_MESSAGE);
       return false;
     }
@@ -98,15 +98,69 @@ public class CustomerTable implements TableOps {
   }
 
   /**
-   * Method to update a tuple from given table with user inputs.
+   * Method to update a tuple from customer table with user inputs.
    *
    * @param connection db connection
-   * @param parameters parameters for the table
+   * @param parameters parameters for the customer table
    * @return true if tuple updated successfully, false otherwise
    */
   @Override
   public boolean updateDBTuple(Connection connection, Object[] parameters) {
-    return false;
+    if (parameters.length != 5) {
+      JOptionPane.showMessageDialog(null,
+              "Invalid number of customer parameters for update.",
+              "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+    String custId = (String) parameters[0];
+    String firstName = (String) parameters[1];
+    String lastName = (String) parameters[2];
+    String phone = (String) parameters[3];
+    String email = (String) parameters[4];
+    if (custId == null || custId.trim().isEmpty()) {
+      JOptionPane.showMessageDialog(null, "Customer ID cannot be empty.",
+              "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+
+    int id;
+    try {
+      id = Integer.parseInt(custId);
+    } catch (NumberFormatException e) {
+      JOptionPane.showMessageDialog(null, "Invalid customer ID format.",
+              "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+    if (firstName == null || firstName.trim().isEmpty()) {
+      firstName = null;
+    }
+    if (lastName == null || lastName.trim().isEmpty()) {
+      lastName = null;
+    }
+    if (phone == null || phone.trim().isEmpty()) {
+      phone = null;
+    } else if (!isValidPhone(phone)) {
+      JOptionPane.showMessageDialog(null, "Invalid phone number. "
+              + "Please enter a valid number.", "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+    if (email == null || email.trim().isEmpty()) {
+      email = null;
+    } else if (!isValidEmail(email)) {
+      JOptionPane.showMessageDialog(null, "Invalid email address. "
+              + " Please enter a valid email.", "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+
+    String call = "{CALL updateCustomerTuple(?, ?, ?, ?, ?)}";
+    try {
+      return TableUtil.executeProcedure(connection, call, id, firstName, lastName, phone, email);
+    } catch (Exception e) {
+      JOptionPane.showMessageDialog(null,
+              "Error updating tuple: " + e.getMessage(),
+              "Database Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
   }
 
 }
