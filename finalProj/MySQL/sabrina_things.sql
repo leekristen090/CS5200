@@ -74,5 +74,6 @@ DELIMITER ;
 
 /*
 I want events that update the status of shows and tours once they are complete
+maybe a thing to buy ticket and have a trigger to update available seats
 */
 
