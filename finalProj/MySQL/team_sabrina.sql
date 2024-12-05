@@ -91,5 +91,3 @@ FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON DELETE CASCADE ON 
 FOREIGN KEY (tour_name, show_id) REFERENCES sabrina_show(tour_name, show_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-
--- functions, procedures, events, triggers, and such (see sabrina_things.sql)

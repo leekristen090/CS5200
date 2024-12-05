@@ -77,23 +77,40 @@ END //
 DELIMITER ;
 
 /*
-procedure to add tuple to sabrina_show
+add show tuple with date validation 
 */
 DROP PROCEDURE IF EXISTS addShowTuple;
 DELIMITER //
 CREATE PROCEDURE addShowTuple(
-	tour_name VARCHAR(64), 
-	show_id INT,
-	venue_name VARCHAR(64),
-	location_id INT,
-	scheduled_date DATE, 
-	show_status ENUM('Upcoming', 'Cancelled', 'Completed')
+	p_tour_name VARCHAR(64), 
+	p_show_id INT,
+	p_venue_name VARCHAR(64),
+	p_location_id INT,
+	p_scheduled_date DATE, 
+	p_show_status ENUM('Upcoming', 'Cancelled', 'Completed')
 )
 BEGIN 
-	INSERT INTO sabrina_show VALUES(tour_name, show_id, venue_name, location_id, scheduled_date, show_status);
+	DECLARE tourStart DATE;
+    DECLARE tourEnd DATE;
+    DECLARE tourExists INT;
+    
+    SELECT COUNT(*), start_date, start_date
+    INTO tourExists, tourStart, tourEnd
+    FROM tour
+    WHERE tour_name = p_tour_name;
+    
+    IF tourExists = 0 THEN 
+    SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error: Tour does not exist.';
+    END IF;
+    IF p_scheduled_date < tourStart OR (tourEnd IS NOT NULL AND p_scheduled_date > tourEnd) THEN 
+		SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error: Scheduled date must fall within the tour dates.';
+    END IF;
+    
+	INSERT INTO sabrina_show VALUES(p_tour_name, p_show_id, p_venue_name, p_location_id, p_scheduled_date, p_show_status);
 END//
 DELIMITER ;
-
 /*
 procedure to add tuple to song
 */

@@ -9,22 +9,25 @@ update album tuple
 DROP PROCEDURE IF EXISTS updateAlbumTuple;
 DELIMITER //
 CREATE PROCEDURE updateAlbumTuple(
-	chosen_album_id INT,
-	new_album_name VARCHAR(64), 
-	new_release_date DATE 
+    IN chosen_album_id INT,
+    IN new_album_name VARCHAR(64),
+    IN new_release_date DATE
 )
-BEGIN 
-	UPDATE album
+BEGIN
+    UPDATE album
     SET 
-		album_name = new_album_name,
-		release_date = new_release_date
+        album_name = COALESCE(new_album_name, album_name),
+        release_date = COALESCE(new_release_date, release_date)
     WHERE album_id = chosen_album_id;
+
     CALL checkRowCount(
         'Row successfully updated.',
         'No rows found with the given album_id.'
     );
 END //
 DELIMITER ;
+
+
 
 /*
 update tuple in customer
@@ -41,10 +44,10 @@ CREATE PROCEDURE updateCustomerTuple (
 BEGIN 
 	UPDATE customer
     SET 
-    first_name = p_first_name,
-    last_name = p_last_name,
-    phone = p_phone,
-    email = p_email
+    first_name = COALESCE(p_first_name,first_name),
+    last_name = COALESCE(p_last_name,last_name),
+    phone = COALESCE(p_phone,phone),
+    email = COALESCE(p_email,email)
     WHERE customer_id = p_customer_id;
     CALL checkRowCount(
         'Row successfully updated.',
@@ -67,9 +70,9 @@ CREATE PROCEDURE updateLocationTuple(
 BEGIN 
 	UPDATE location
     SET 
-		location_id = p_city,
-        state_region = p_state_region,
-        country = p_country
+		location_id = COALESCE(p_city,location_id),
+        state_region = COALESCE(p_state_region,state_region),
+        country = COALESCE(p_country,country)
     WHERE location_id = p_location_id;
     CALL checkRowCount(
         'Row successfully updated.',
@@ -90,7 +93,7 @@ CREATE PROCEDURE updateOpeningActTuple(
 BEGIN
 	UPDATE opening_act
     SET 
-		act_name = p_act_name
+		act_name = COALESCE(p_act_name,act_name)
 	WHERE act_id = p_act_id;
     CALL checkRowCount(
         'Row successfully updated.',
@@ -113,8 +116,8 @@ CREATE PROCEDURE updateOpenToShowTuple(
 BEGIN 
 	UPDATE opening_to_show
     SET 
-		act_id = p_act_id,
-        performance_order = p_performance_order
+		act_id = COALESCE(p_act_id,act_id),
+        performance_order = COALESCE(p_performance_order,performance_order)
     WHERE tour_name = p_tour_name AND show_id = p_show_id;
     CALL checkRowCount(
         'Row successfully updated.',
@@ -139,10 +142,10 @@ CREATE PROCEDURE updateShowTuple (
 BEGIN 
 	UPDATE sabrina_show
     SET 
-		venue_name = p_venue_name,
-        location_id = p_location_id,
-        scheduled_date = p_scheduled_date,
-        show_status = p_show_status
+		venue_name = COALESCE(p_venue_name,venue_name),
+        location_id = COALESCE(p_location_id,location_id),
+        scheduled_date = COALESCE(p_scheduled_date,scheduled_date),
+        show_status = COALESCE(p_show_status,show_status)
     WHERE tour_name = p_tour_name AND show_id = p_show_id;
     CALL checkRowCount(
         'Row successfully updated.',
@@ -166,10 +169,10 @@ CREATE PROCEDURE updateSongTuple(
 BEGIN 
 	UPDATE song
     SET 
-		song_name = p_song_name,
-        album_id = p_album_id,
-        tour_name = p_tour_name,
-        order_played = p_order_played
+		song_name = COALESCE(p_song_name,song_name),
+        album_id = COALESCE(p_album_id,album_id),
+        tour_name = COALESCE(p_tour_name,tour_name),
+        order_played = COALESCE(p_order_played,order_played)
     WHERE song_id = p_song_id;
     CALL checkRowCount(
         'Row successfully updated.',
@@ -195,12 +198,12 @@ CREATE PROCEDURE updateTicketTuple(
 BEGIN 
 	UPDATE ticket_sales
     SET 
-		purchase_date = p_purchase_date,
-        total_cost = p_total_cost,
-        ticket_quantity = p_ticket_quantity,
-        customer_id = p_customer_id,
-        tour_name = p_tour_name,
-        show_id = p_show_id
+		purchase_date = COALESCE(p_purchase_date,purchase_date),
+        total_cost = COALESCE(p_total_cost,total_cost),
+        ticket_quantity = COALESCE(p_ticket_quantity,ticket_quantity),
+        customer_id = COALESCE(p_customer_id,customer_id),
+        tour_name = COALESCE(p_tour_name,tour_name),
+        show_id = COALESCE(p_show_id,show_id)
     WHERE transaction_id = p_transaction_id;
     CALL checkRowCount(
         'Row successfully updated.',
@@ -223,9 +226,9 @@ CREATE PROCEDURE updateTourTuple(
 BEGIN
 	UPDATE tour
     SET 
-		start_date = p_start_date,
-        end_date = p_end_date,
-        tour_status = p_tour_status
+		start_date = COALESCE(p_start_date,start_date),
+        end_date = COALESCE(p_end_date,end_date),
+        tour_status = COALESCE(p_tour_status,tour_status)
     WHERE tour_name = p_tour_name;
     CALL checkRowCount(
         'Row successfully updated.',
@@ -247,7 +250,7 @@ CREATE PROCEDURE updateVenueTuple(
 BEGIN 
 	UPDATE venue
     SET 
-		capacity = p_capacity
+		capacity = COALESCE(p_capacity,capacity)
     WHERE location_id = p_location_id AND venue_name = p_venue_name;
     CALL checkRowCount(
         'Row successfully updated.',
