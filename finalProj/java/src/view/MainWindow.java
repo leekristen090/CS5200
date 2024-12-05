@@ -1,8 +1,16 @@
 package view;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.*;
+import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.Vector;
 
 import controller.*;
 
@@ -57,6 +65,7 @@ public class MainWindow extends JFrame {
     addTupleButton.addActionListener(e -> openAddTupleDialog());
     deleteTupleButton.addActionListener(e -> openDeleteTupleDialog());
     updateTableButton.addActionListener(e -> openUpdateDialog());
+    futureShowsButton.addActionListener(e -> displayFutureShow());
 
     // Set window properties
     setSize(800, 600);
@@ -264,5 +273,56 @@ public class MainWindow extends JFrame {
     updateDialog.setVisible(true);
   }
 
+
+  private void displayFutureShow() {
+    tablePanel.removeAll(); // Clear previous table
+
+    // SQL query to call the stored procedure
+    String call = "CALL get_future_show_with_available_seats();";
+
+    try (PreparedStatement stmt = connection.prepareStatement(call)) {
+      ResultSet rs = stmt.executeQuery(); // Execute the stored procedure and get the result set
+
+      // Define column names as per the procedure result
+      String[] columnNames = {"Tour Name", "Show ID", "Venue Name", "City", "Country",
+              "Scheduled Date", "Sold Tickets", "Venue Capacity", "Available Seats"};
+
+      // Convert ResultSet to a JTable
+      JTable table = new JTable();
+      table.setModel(buildTableModel(rs, columnNames)); // Set the table model to display results
+
+      // Add the table to the panel
+      tablePanel.add(new JScrollPane(table), BorderLayout.CENTER);
+      tablePanel.revalidate();
+      tablePanel.repaint();
+
+    } catch (Exception e) {
+      JOptionPane.showMessageDialog(this, "Error fetching future shows: "
+              + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+  }
+
+  // Helper method to build table model from ResultSet
+  private DefaultTableModel buildTableModel(ResultSet rs, String[] columnNames)
+          throws SQLException {
+    ResultSetMetaData metaData = rs.getMetaData();
+    int columnCount = metaData.getColumnCount();
+
+    Vector<String> columns = new Vector<>();
+    for (String column : columnNames) {
+      columns.add(column);
+    }
+
+    Vector<Vector<Object>> data = new Vector<>();
+    while (rs.next()) {
+      Vector<Object> row = new Vector<>();
+      for (int i = 1; i <= columnCount; i++) {
+        row.add(rs.getObject(i));
+      }
+      data.add(row);
+    }
+
+    return new DefaultTableModel(data, columns);
+  }
 
 }
