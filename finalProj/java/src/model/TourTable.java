@@ -103,7 +103,43 @@ public class TourTable implements TableOps {
    */
   @Override
   public boolean updateDBTuple(Connection connection, Object[] parameters) {
-    return false;
+    String tourName = (String) parameters[0];
+    String startDate = (String) parameters[1];
+    String endDate = (String) parameters[2];
+    String status = (String) parameters[3];
+    if (tourName == null || tourName.trim().isEmpty()) {
+      JOptionPane.showMessageDialog(null,
+              "Tour name cannot be empty.",
+              "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+    if (startDate == null || startDate.trim().isEmpty()) {
+      startDate = null;
+    } else if (!isValidDate(startDate)) {
+      JOptionPane.showMessageDialog(null, "Invalid date format. "
+              + "Please use YYYY-MM-DD.", "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+    if (endDate == null || endDate.trim().isEmpty()) {
+      endDate = null;
+    } else if (!isValidDate(endDate)) {
+      JOptionPane.showMessageDialog(null, "Invalid date format. "
+              + "Please use YYYY-MM-DD.", "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+    if (status == null || status.trim().isEmpty()) {
+      status = null;
+    }
+
+    String call = "{CALL updateTourTuple(?, ?, ?, ?)}";
+    try {
+      return TableUtil.executeProcedure(connection, call, tourName, startDate, endDate, status);
+    } catch (Exception e) {
+      JOptionPane.showMessageDialog(null,
+              "Error updating tuple: " + e.getMessage(),
+              "Database Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
   }
 
 }

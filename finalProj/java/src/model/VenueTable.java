@@ -92,7 +92,34 @@ public class VenueTable implements TableOps {
    */
   @Override
   public boolean updateDBTuple(Connection connection, Object[] parameters) {
-    return false;
+    String locationId = (String) parameters[0];
+    String venueName = (String) parameters[1];
+    String capacity = (String) parameters[2];
+    if (locationId == null || locationId.trim().isEmpty()
+            || venueName == null || venueName.trim().isEmpty()) {
+      JOptionPane.showMessageDialog(null,
+              "Location ID and/or venue name cannot be empty.",
+              "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+    int location_Id = Integer.parseInt(locationId);
+    if (capacity == null || capacity.trim().isEmpty()) {
+      JOptionPane.showMessageDialog(null,
+              "Must have input for capacity for update.",
+              "Input Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
+    int cap = Integer.parseInt(capacity);
+
+    String call = "{CALL updateVenueTuple(?, ?, ?)}";
+    try {
+      return TableUtil.executeProcedure(connection, call, location_Id, venueName, cap);
+    } catch (Exception e) {
+      JOptionPane.showMessageDialog(null,
+              "Error updating tuple: " + e.getMessage(),
+              "Database Error", JOptionPane.ERROR_MESSAGE);
+      return false;
+    }
   }
 
 }
