@@ -96,10 +96,9 @@ can click ok and, if successful, the table will be shown in the table environmen
 added tuple.
 If the delete button is clicked, again the user will 
 be prompted with a pop-up window with a dropdown menu of tables and text boxes. These text boxes 
-will show the primary and composite key fields for the corresponding table which is needed for 
-deletion. Once they are satisfied with the information, they
-can click ok and, if successful, the table will be shown in the table environment with their 
-chosen tuple deleted.
+will show the primary and composite primary key fields for the corresponding table which is needed 
+for deletion. Once they are satisfied with the information, they can click ok and, if successful, 
+the table will be shown in the table environment with their chosen tuple deleted.
 If the future shows button is clicked, the user will see a table that contains all of 
 Sabrina's upcoming shows as well as the tour name, venue and location information, and 
 seat availability. All user actions and inputs have appropriate error handling as well as allowing 
@@ -141,7 +140,7 @@ from the DBMS using techniques such as catch/try mechanism)
 ## Final report requirements **(to be deleted before submission)**
 Please use your project proposal report as a starting point to create your project’s final report. 
 Provide a single document that contains the following sections:
-- [ ] README 
+- [x] README 
   * Provide a README section for creating and running the project. We need complete specifications 
     for building your project on our computer. Specify all libraries, software, etc. needed to run
     the application. Specify expected installation directories. If you use a specific
@@ -152,7 +151,7 @@ Provide a single document that contains the following sections:
 - [x] Provide the current conceptual design as a UML diagram for the project
 - [x] Provide a logical design for the submitted database schema 
   * (Feel free to Reverse Engineer your final schema in the MySQL workbench)
-- [ ] Provide the final user flow of the system
+- [x] Provide the final user flow of the system
   * List the commands or methods the user performs to interact with the application
 - [x] Provide a “Lessons Learned” section that contains report sections for the following:
   * Technical expertise gained
