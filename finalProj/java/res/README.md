@@ -1,10 +1,6 @@
 # CS5200 Final Project Deliverable README
-Provide a README section for creating and running the project. We need complete specifications 
-for building your project on our computer. Specify all libraries, software, etc. needed to run 
-the application. Specify expected installation directories. If you use a specific technology for 
-the project, the technology’s download page must be listed.
-
 This document holds information and instructions for setting up and running this project.
+
 ## Software used for creating and running this project:
 ### MySQL community server (Latest Version) and MySQL Workbench (Latest Version)
 **Server Link:** https://dev.mysql.com/downloads/mysql/
@@ -64,6 +60,51 @@ This project uses the following libraries and frameworks:
 * MySQL Connector/J: JDBC Driver to connect to MySQL 
 * Java Swing: GUI framework used for the application's user interface
 
+## How to run
+This program can be run on IntelliJ IDEA as stated in the previous section. It can also be run 
+through the provided .jar file, this can be found in the res folder. To run the .jar file there 
+are two ways to use it. The first, you can simply double-click the file and that will begin
+the program. You can also use a terminal. To do so open a terminal window and in the project 
+structure navigate to the folder that houses the .jar file. In my project it is in the res folder.
+Once you are in the folder type the following command into the terminal line:
+
+java -jar NameOfJARFile.jar
+
+In this case 'NameOfJARFile.jar' is 'sabrina.jar'. After typing that line press 
+ENTER(or RETURN depending on your computer). The application should then begin.
+
+Once the GUI has opened, the user will be prompted with a login window. This is where they will 
+validate their credentials. For our purposes, their credentials are those for MySQL Workbench. The 
+user can type their username and password and once completed click 'login'. If their credentials do 
+not match, a window with an error message will pop up. Once the user has successfully logged in, the 
+main window will come into view. The user will see five buttons on the side and a blank area which
+will hold table visualizations. Those five buttons include, show table, update tuple, add tuple, 
+delete tuple, and future shows. 
+If the user clicks the show table button, they will be prompted 
+with a pop-up window that contains a dropdown menu of the available tables to view. Once they have 
+selected a table to view they can press ok and the blank area will be populated with the selected
+table. 
+If the user clicks the update tuple button, they will be prompted with a pop-up window that 
+has a dropdown menu of the available tables that can have a tuple updated. There will also be text 
+boxes that correspond to the table selected for the user to type updated information for the table 
+attributes. Once they are satisfied with the information, they can click ok and, if successful,
+the updated table will be shown in the table environment.
+If the user clicks add tuple, the pop-up window will be similar to that of the update 
+tuple button. They will see the dropdown menu for the tables and text boxes for typing the 
+information for the tuple they wish to add. Once they are satisfied with the information, they 
+can click ok and, if successful, the table will be shown in the table environment with the newly
+added tuple.
+If the delete button is clicked, again the user will 
+be prompted with a pop-up window with a dropdown menu of tables and text boxes. These text boxes 
+will show the primary and composite key fields for the corresponding table which is needed for 
+deletion. Once they are satisfied with the information, they
+can click ok and, if successful, the table will be shown in the table environment with their 
+chosen tuple deleted.
+If the future shows button is clicked, the user will see a table that contains all of 
+Sabrina's upcoming shows as well as the tour name, venue and location information, and 
+seat availability. All user actions and inputs have appropriate error handling as well as allowing 
+SQL errors such as integrity constraints.
+
 # Delete all below this line before submission
 ## DB Application 
 You must have connectivity from your front end to your database in order to receive any points 
@@ -105,20 +146,20 @@ Provide a single document that contains the following sections:
     for building your project on our computer. Specify all libraries, software, etc. needed to run
     the application. Specify expected installation directories. If you use a specific
     technology for the project, the technology’s download page must be listed.
-- [ ] Provide the Technical Specifications for the project 
+- [x] Provide the Technical Specifications for the project 
   * This entails the software used to build the project such as the host language and 
   any other frameworks used
-- [ ] Provide the current conceptual design as a UML diagram for the project
-- [ ] Provide a logical design for the submitted database schema 
+- [x] Provide the current conceptual design as a UML diagram for the project
+- [x] Provide a logical design for the submitted database schema 
   * (Feel free to Reverse Engineer your final schema in the MySQL workbench)
 - [ ] Provide the final user flow of the system
   * List the commands or methods the user performs to interact with the application
-- [ ] Provide a “Lessons Learned” section that contains report sections for the following:
+- [x] Provide a “Lessons Learned” section that contains report sections for the following:
   * Technical expertise gained
   * Insights, time management insights, data domain insights etc.
   * Realized or contemplated alternative design / approaches to the project
   * Document any code not working in this section
-- [ ] Provide a “Future work” section containing:
+- [x] Provide a “Future work” section containing:
   * Planned uses of the database
   * Potential areas for added functionality
   * No future uses or work can be documented if justification is provided
@@ -126,3 +167,12 @@ Provide a single document that contains the following sections:
 The final report file should be named canvas_group_name_final_report.pdf, where canvas_group_name
 is your group name in canvas. Remember, this is a writing exercise. Please take the 
 time to write a cohesive report on your semester’s project.
+
+
+# Submission Stuff
+This is all in a zip file
+- [ ] Final project report
+- [ ] Database dump
+- [ ] Application code
+
+Then in the comment of the submission, put a link to the demo video.
