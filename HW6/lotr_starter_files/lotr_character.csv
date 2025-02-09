@@ -1,0 +1,11 @@
+character_name,homeland,royalty,fellowship,survive,alias,book_number,title,species_name
+Aragorn,gondor,1,1,1,strider,1,"the fellowship of the ring",human
+Elrond,rivendell,1,0,1,"lord of rivendell",1,"the fellowship of the ring",elf
+Eowyn,rohan,1,0,1,"white lady of rohan",2,"the two towers",human
+Faramir,gondor,1,0,1,"captain of the white tower",3,"the return of the king",human
+Frodo,shire,0,1,1,"bearer of the one ring",1,"the fellowship of the ring",hobbit
+Gandalf,"undying lands",0,1,1,greybeard,1,"the fellowship of the ring",maiar
+Gimli,"lonely mountain",0,1,1,lockbearer,1,"the fellowship of the ring",dwarf
+Legolas,mirkwood,1,1,1,"prince of the woodlands",1,"the fellowship of the ring",elf
+Saruman,isengard,0,0,0,"saruman the white",1,"the fellowship of the ring",maiar
+Sauron,mordor,0,0,0,"dark lord",1,"the fellowship of the ring",maiar

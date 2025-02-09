@@ -1,1 +1,11 @@
-
+region_name,major_species,description,middle_earth_location,leader
+bree,human,village,"north on the crossroads",none
+gondor,human,"mountainous terrain",south,"Kings of Gondor"
+isengard,orc,"broad plain containing the tower of Orthanc",south,Saruman
+"lonely mountain",dwarf,cave,northeast,"Durin folk"
+mirkwood,elf,"forested elven village",east,Thranduil
+mordor,orc,"volcanic plain",southeast,Sauron
+rivendell,elf,"well hidden elf village in the foothills of the Misty Mountains",,Elrond
+rohan,human,"green and fertile area",south,"King of Rohan"
+shire,hobbit,"grassy rolling hills",northwest,"King of Arthedain"
+"undying lands",Maiar,"beyond middle earth","outside middle earth",none

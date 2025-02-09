@@ -1,0 +1,10 @@
+character1_name,character2_name,book_id,region_name
+aragorn,eowyn,2,rohan
+faramir,frodo,3,mordor
+frodo,aragorn,1,bree
+frodo,elrond,1,rivendell
+gandalf,frodo,1,shire
+gimli,elrond,1,rivendell
+gimli,legolas,1,rivendell
+saruman,aragorn,2,isengard
+sauron,frodo,1,bree
